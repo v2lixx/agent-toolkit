@@ -156,8 +156,7 @@ promise that the agent would remember the correction forever.
 These are qualitative dogfooding observations, not a controlled memory benchmark.
 Private journals are not included in this repository. We have not measured a model
 recall benefit on representative real work, a universal reduction in mistakes, or
-how frequently agents obey the protocol without reminders. A controlled synthetic
-pilot is reported below, including its zero-difference result.
+how frequently agents obey the protocol without reminders.
 
 ### A maintainer-reported recovery example
 
@@ -172,22 +171,6 @@ study in this release**. The underlying historical record could not be verified
 through the available thread-history reader. No login details, service identifiers,
 or private journal excerpts are published. It illustrates the intended recovery
 pattern; it is not a measured success rate.
-
-### Controlled recall pilot: no advantage measured here
-
-![Side-by-side measured requirement recall failure curves for rolling summary and Diary recovery.](assets/recall-comparison.svg)
-
-Using **GPT-5.5 with medium reasoning effort**, three synthetic histories were
-probed at 4k, 8k, 16k, and 32k history-token checkpoints. Both rolling-summary and
-Diary-recovery continuations passed **672 out of 672 exact requirement checks**.
-Neither arm produced a stale corrected value or proposed repeating a completed
-action. Full-history controls also passed all 240 checks.
-
-The pilot therefore **does not demonstrate a recall advantage for Diary**. Its
-summary budget was sufficient to hold the required facts, and the summary model
-retained them. The full-record Diary arm consumed substantially more recovered
-context. The 672 checks repeat requirements across checkpoints; they are not 672
-independent trials. See the [experiment and limitations](benchmarks/README.md).
 
 ### What does recording cost?
 
