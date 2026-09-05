@@ -1,0 +1,2 @@
+-r ../mcps/continuity-journal/requirements.txt
+tiktoken==0.14.0

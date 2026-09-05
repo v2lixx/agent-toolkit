@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "purpose": "Transparent route-discovery accounting, separate from the 39-call recall experiment",
+  "automatic_retries": false,
+  "attempts": [
+    {
+      "attempt": 1,
+      "requested_model": "gpt-6-astra",
+      "outcome": "CLI exited 1; no completed-turn result retained",
+      "provider_usage": null,
+      "wall_seconds": null,
+      "diagnostic_limit": "Initial adapter intentionally suppressed diagnostics; the fatal cause was not retained."
+    },
+    {
+      "attempt": 2,
+      "requested_model": "gpt-6-astra",
+      "outcome": "CLI exited 1; no completed-turn result retained",
+      "provider_usage": null,
+      "wall_seconds": null,
+      "diagnostic_limit": "A model-metadata warning was captured, but it does not by itself establish the fatal failure cause."
+    },
+    {
+      "attempt": 3,
+      "requested_model": null,
+      "outcome": "Default-route CLI exited 0, but the initial parser rejected a nonfatal warning item; the response and usage were not retained",
+      "provider_usage": null,
+      "wall_seconds": null,
+      "diagnostic_limit": "Parser failure, not evidence that the authenticated route was unavailable."
+    },
+    {
+      "attempt": 4,
+      "requested_model": null,
+      "outcome": "Successful synthetic default-route response and provider usage",
+      "artifact": "recall-route-default-pilot.json"
+    },
+    {
+      "attempt": 5,
+      "requested_model": null,
+      "outcome": "Successful explicitly authorized non-JSON header probe; CLI selected gpt-5.5",
+      "artifact": "recall-route-model-header.json",
+      "diagnostic_limit": "CLI model-header evidence, not backend model attestation; structured usage unavailable in this probe."
+    }
+  ],
+  "notes": [
+    "Null usage or wall time means unavailable, never zero.",
+    "No credentials, private filesystem paths, actual session IDs, or model reasoning are included.",
+    "Experimental calls explicitly request gpt-5.5 with medium reasoning effort after successful route verification."
+  ]
+}

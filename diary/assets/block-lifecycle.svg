@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 1170" role="img" aria-labelledby="title desc">
+  <title id="title">Diary block updates and same-Diary resume links</title>
+  <desc id="desc">A new task appends a working block. A related correction checkpoints and updates that same block. Completion or cancellation changes that block's status. Explicit pause preserves it as paused; resuming appends a linked working copy at the bottom. Completing the copy completes the paused source chain in the same Diary. Fast changes logging time; nod skips logging.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#6c8290"/></marker>
+  </defs>
+  <rect width="1260" height="1170" rx="20" fill="#f6f9fa"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#152e40">
+    <text x="42" y="50" font-size="30" font-weight="700">When to edit, when to append, and what stays linked</text>
+    <text x="42" y="82" font-size="18" fill="#566b79">All blocks below belong to one Diary. Independent tasks and child Diaries have separate lifecycles.</text>
+
+    <text x="42" y="127" font-size="17" font-weight="700" fill="#087f78">A · ORDINARY WORK AND RELATED CORRECTIONS</text>
+    <rect x="42" y="150" width="260" height="130" rx="12" fill="white" stroke="#c4d4dc"/>
+    <text x="63" y="184" font-size="22" font-weight="700">New task request</text>
+    <text x="63" y="216" font-size="17">Append a new bottom block.</text>
+    <text x="63" y="247" font-size="17">Record prompt + ordered plan.</text>
+    <path d="M302 215H358" fill="none" stroke="#6c8290" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="371" y="150" width="350" height="130" rx="12" fill="#e1f2ef" stroke="#087f78"/>
+    <text x="393" y="184" font-size="22" font-weight="700">Block N · Working</text>
+    <text x="393" y="216" font-size="17">Exact prompt, plan, progress, lessons.</text>
+    <text x="393" y="247" font-size="17">One stable entry ID.</text>
+    <path d="M721 215H778" fill="none" stroke="#6c8290" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="790" y="150" width="428" height="130" rx="12" fill="white" stroke="#c4d4dc"/>
+    <text x="813" y="184" font-size="22" font-weight="700">Complete or cancel</text>
+    <text x="813" y="216" font-size="17">Update Block N's real final status.</text>
+    <text x="813" y="247" font-size="17">No duplicate completion block.</text>
+    <path d="M548 280V318" fill="none" stroke="#6c8290" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="263" y="329" width="663" height="120" rx="12" fill="white" stroke="#c4d4dc"/>
+    <text x="286" y="362" font-size="21" font-weight="700">Related correction or a new priority while work is active</text>
+    <text x="286" y="394" font-size="17">Checkpoint first → append exact “+” prompt → revise the plan.</text>
+    <text x="286" y="426" font-size="17" fill="#087f78" font-weight="700">Continue the same Block N. Do not silently mark it paused or finished.</text>
+    <path d="M263 390H224V308H440V281" fill="none" stroke="#6c8290" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <text x="42" y="496" font-size="17" font-weight="700" fill="#bd581d">B · EXPLICIT PAUSE AND RESUME</text>
+    <rect x="42" y="521" width="338" height="160" rx="12" fill="#fff0e5" stroke="#d79770"/>
+    <text x="64" y="556" font-size="22" font-weight="700">Source Block N · Paused</text>
+    <text x="64" y="589" font-size="17">User explicitly pauses the work.</text>
+    <text x="64" y="620" font-size="17">Save the checkpoint and status.</text>
+    <text x="64" y="651" font-size="17">Retain the original in place.</text>
+    <path d="M380 599H470" fill="none" stroke="#6c8290" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="397" y="577" font-size="16" fill="#566b79">Resume</text>
+    <rect x="483" y="521" width="735" height="160" rx="12" fill="#e1f2ef" stroke="#087f78"/>
+    <text x="505" y="556" font-size="22" font-weight="700">New bottom Block M · Working</text>
+    <text x="505" y="589" font-size="17">Copy N's content; assign a new number, entry ID, and timestamp.</text>
+    <text x="505" y="620" font-size="17">Place the exact resume prompt above the original request; revise the plan if needed.</text>
+    <text x="505" y="651" font-size="17" fill="#087f78" font-weight="700">resumes_entry_id → N's entry ID     ·     resumes_block_number → N</text>
+    <path d="M848 681V731" fill="none" stroke="#6c8290" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="483" y="744" width="735" height="126" rx="12" fill="white" stroke="#c4d4dc"/>
+    <text x="505" y="780" font-size="21" font-weight="700">Finish M → complete M and its linked paused source chain</text>
+    <text x="505" y="812" font-size="17">The update is atomic within this Diary. N stays paused until the copy completes.</text>
+    <text x="505" y="844" font-size="17">Cancel M → cancel M only; its source remains paused.</text>
+    <path d="M483 807H210V682" fill="none" stroke="#6c8290" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+    <text x="54" y="842" font-size="16" fill="#566b79">M is the next allocated number,</text>
+    <text x="54" y="866" font-size="16" fill="#566b79">not necessarily N + 1.</text>
+
+    <text x="42" y="922" font-size="17" font-weight="700" fill="#087f78">C · TAGS CHANGE RECORDING, NOT THE MEANING OF COMPLETION</text>
+    <rect x="42" y="945" width="570" height="134" rx="12" fill="white" stroke="#c4d4dc"/>
+    <text x="64" y="979" font-size="22" font-weight="700">Terminal (fast) · work first, then log</text>
+    <text x="64" y="1012" font-size="17">Preserve new-task / correction / resume relationships.</text>
+    <text x="64" y="1044" font-size="17">If interrupted and unfinished, keep the work Working.</text>
+    <rect x="635" y="945" width="583" height="134" rx="12" fill="white" stroke="#c4d4dc"/>
+    <text x="657" y="979" font-size="22" font-weight="700">Terminal (nod) · no Diary operation</text>
+    <text x="657" y="1012" font-size="17">No block, correction, or later backfill for that prompt.</text>
+    <text x="657" y="1044" font-size="17">If both terminal tags are present, (nod) wins.</text>
+    <text x="42" y="1124" font-size="17" fill="#566b79">Labels are English explanations. Existing on-disk Korean lifecycle identifiers are preserved for compatibility.</text>
+  </g>
+</svg>

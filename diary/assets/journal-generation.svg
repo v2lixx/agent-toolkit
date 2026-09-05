@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+<title id="title">Controlled model journal-writing overhead</title>
+<desc id="desc">Measured output tokens and wall time for nine actual model-generated journal records. These are optional bookkeeping-stage costs, not end-to-end task costs.</desc>
+<rect width="1400" height="760" rx="20" fill="#f6f9fa"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="44" y="52" font-size="31" fill="#152e40" text-anchor="start" font-weight="700">The model&#x27;s journal-writing stage has a real cost</text>
+<text x="44" y="85" font-size="18" fill="#566b79" text-anchor="start" font-weight="400">One batched generation + three actual MCP writes per block; original task already completed.</text>
+<text x="90" y="144" font-size="23" fill="#152e40" text-anchor="start" font-weight="700">Reported model output tokens</text>
+<text x="90" y="174" font-size="17" fill="#566b79" text-anchor="start" font-weight="400">3 samples per prompt-length scenario</text>
+<line x1="90" y1="535.0" x2="600" y2="535.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="76" y="541.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">0</text>
+<line x1="90" y1="425.0" x2="600" y2="425.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="76" y="431.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">100</text>
+<line x1="90" y1="315.0" x2="600" y2="315.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="76" y="321.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">200</text>
+<line x1="90" y1="205.0" x2="600" y2="205.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="76" y="211.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">300</text>
+<rect x="136.0" y="343.23337" width="78" height="191.76663000000002" rx="5" fill="#087f78"/>
+<line x1="175.0" y1="343.23337" x2="175.0" y2="339.2" stroke="#152e40" stroke-width="2"/>
+<line x1="166.0" y1="339.2" x2="184.0" y2="339.2" stroke="#152e40" stroke-width="2"/>
+<text x="175.0" y="325.2" font-size="19" fill="#087f78" text-anchor="middle" font-weight="700">174.3</text>
+<text x="175.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">80</text>
+<rect x="306.0" y="323.43337" width="78" height="211.56662999999998" rx="5" fill="#087f78"/>
+<line x1="345.0" y1="323.43337" x2="345.0" y2="317.2" stroke="#152e40" stroke-width="2"/>
+<line x1="336.0" y1="317.2" x2="354.0" y2="317.2" stroke="#152e40" stroke-width="2"/>
+<text x="345.0" y="303.2" font-size="19" fill="#087f78" text-anchor="middle" font-weight="700">192.3</text>
+<text x="345.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">800</text>
+<rect x="476.0" y="335.16663000000005" width="78" height="199.83336999999995" rx="5" fill="#087f78"/>
+<line x1="515.0" y1="335.16663000000005" x2="515.0" y2="326.0" stroke="#152e40" stroke-width="2"/>
+<line x1="506.0" y1="326.0" x2="524.0" y2="326.0" stroke="#152e40" stroke-width="2"/>
+<text x="515.0" y="312.0" font-size="19" fill="#087f78" text-anchor="middle" font-weight="700">181.7</text>
+<text x="515.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">4,000</text>
+<text x="345.0" y="602" font-size="17" fill="#566b79" text-anchor="middle" font-weight="400">Original prompt length (o200k_base tokens)</text>
+<text x="800" y="144" font-size="23" fill="#152e40" text-anchor="start" font-weight="700">Added controlled stage time (seconds)</text>
+<text x="800" y="174" font-size="17" fill="#566b79" text-anchor="start" font-weight="400">3 samples per prompt-length scenario</text>
+<line x1="800" y1="535.0" x2="1310" y2="535.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="541.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">0</text>
+<line x1="800" y1="425.0" x2="1310" y2="425.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="431.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">5</text>
+<line x1="800" y1="315.0" x2="1310" y2="315.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="321.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">10</text>
+<line x1="800" y1="205.0" x2="1310" y2="205.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="211.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">15</text>
+<rect x="846.0" y="390.6028438" width="78" height="144.39715619999998" rx="5" fill="#bd581d"/>
+<line x1="885.0" y1="390.6028438" x2="885.0" y2="378.7638606" stroke="#152e40" stroke-width="2"/>
+<line x1="876.0" y1="378.7638606" x2="894.0" y2="378.7638606" stroke="#152e40" stroke-width="2"/>
+<text x="885.0" y="364.7638606" font-size="19" fill="#bd581d" text-anchor="middle" font-weight="700">6.6</text>
+<text x="885.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">80</text>
+<rect x="1016.0" y="374.2285452" width="78" height="160.77145480000001" rx="5" fill="#bd581d"/>
+<line x1="1055.0" y1="374.2285452" x2="1055.0" y2="343.318631" stroke="#152e40" stroke-width="2"/>
+<line x1="1046.0" y1="343.318631" x2="1064.0" y2="343.318631" stroke="#152e40" stroke-width="2"/>
+<text x="1055.0" y="329.318631" font-size="19" fill="#bd581d" text-anchor="middle" font-weight="700">7.3</text>
+<text x="1055.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">800</text>
+<rect x="1186.0" y="391.67498079999996" width="78" height="143.32501920000004" rx="5" fill="#bd581d"/>
+<line x1="1225.0" y1="391.67498079999996" x2="1225.0" y2="380.17578760000004" stroke="#152e40" stroke-width="2"/>
+<line x1="1216.0" y1="380.17578760000004" x2="1234.0" y2="380.17578760000004" stroke="#152e40" stroke-width="2"/>
+<text x="1225.0" y="366.17578760000004" font-size="19" fill="#bd581d" text-anchor="middle" font-weight="700">6.5</text>
+<text x="1225.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">4,000</text>
+<text x="1055.0" y="602" font-size="17" fill="#566b79" text-anchor="middle" font-weight="400">Original prompt length (o200k_base tokens)</text>
+<text x="44" y="649" font-size="18" fill="#152e40" text-anchor="start" font-weight="400">gpt-5.5 · medium effort · bars = mean · whiskers = maximum of 3 samples</text>
+<text x="44" y="681" font-size="17" fill="#152e40" text-anchor="start" font-weight="400">Without Diary: no optional bookkeeping stage. This does not compare total task time or rework saved.</text>
+<text x="44" y="713" font-size="17" fill="#566b79" text-anchor="start" font-weight="400">Input/cache/reasoning counters are reported separately in the data. Output is not the full per-call token budget.</text>
+</g>
+</svg>

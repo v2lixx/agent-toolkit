@@ -1,0 +1,59 @@
+{
+  "response": "{\"requirements\":{\"R001\":\"v-jc4VZUM2wwktTHBR\",\"R002\":\"v-a5ycS8i4Wr7uxbJm\",\"R003\":\"v-DJ539NK9wkm4uPXk\",\"R004\":\"v-H9wrEVcFi7grpKu4\",\"R005\":\"v-c5iXBdZnDzyYDgZo\",\"R006\":\"v-U7qsSkVsajS4nC2s\",\"R007\":\"v-qVG2xjQybDh4Bjwu\",\"R008\":\"v-no3TXADzYBfyTgrD\",\"R009\":\"v-JR9d2bQubahX78v3\",\"R010\":\"v-xo5bMNSKuHPD6kV4\",\"R011\":\"v-9W4WDLcFv2V6Stbg\",\"R012\":\"v-EkFkrRQkSnL4UDx9\",\"R013\":\"v-hob5hQmcjreEfzPQ\",\"R014\":\"v-gW5NZpBynnjdD6Xo\",\"R015\":\"v-LmQqWZMzPVdYeoFj\",\"R016\":\"v-GjANnwmzMefe7iJk\",\"R017\":\"v-kDchpw774TTetQbS\",\"R018\":\"v-Yo2i8Qgd5WWbLUBv\",\"R019\":\"v-6Bfk5zQ8sB7b3HdD\",\"R020\":\"v-VBchdoxrCgndugx4\",\"R021\":\"v-zXFzy63Crx8UWWHX\",\"R022\":\"v-Jk6Rh5UeHSREucVu\",\"R023\":\"v-Hb5AZreo5LBQs8z6\",\"R024\":\"v-2jpzKtmKLokWh489\",\"R025\":\"v-UcEqRLwK2RdmWkze\",\"R026\":\"v-zi4JURhSiNZArHXh\",\"R027\":\"v-EdF9iaRLEUEUXzfW\",\"R028\":\"v-KKyTVa8WnirKdG5z\",\"R029\":\"v-hBSgJNLSKC7HUeDF\",\"R030\":\"v-TFVbsP9WAC8noDYu\",\"R031\":\"v-WEdF8P4XkRNSpjdo\",\"R032\":\"v-7Zy9wNQzr6aEftNY\",\"R033\":\"v-DR4h8zCgSDFUmkaM\",\"R034\":\"v-9sVDHkf8PxFjjdSW\",\"R035\":\"v-AZY8hsk2vA48Vdaq\",\"R036\":\"v-kAceAtLjQQXmSto3\",\"R037\":\"v-FFXLtKXjUdpuNrPa\",\"R038\":\"v-q2uG6bAhf7mTwbhK\",\"R039\":\"v-dcSWGC4rUji5AJfe\",\"R040\":\"v-FcdcTkN2Tb7QdPk8\",\"R041\":\"v-Qqi5ncKrWNLuf9ND\",\"R042\":\"v-guYtM7VsU9n8XPft\",\"R043\":\"v-CLnae2U7KQiWh7d9\",\"R044\":\"v-NAT5u6a8zV2Bc6JU\",\"R045\":\"v-QsY73NF44pTntfU6\",\"R046\":\"v-x2vttNicdBrUGWGB\",\"R047\":\"v-ovJfEReZUoghgHtE\",\"R048\":\"v-LDFF4Zc2fFobSfVq\",\"R998\":null,\"R999\":null},\"completed_actions\":[\"A001\",\"A002\",\"A003\",\"A004\",\"A005\",\"A006\"],\"next_actions\":[\"P001\",\"P002\"]}",
+  "usage": {
+    "input_tokens": 19887,
+    "cached_input_tokens": 13696,
+    "output_tokens": 862,
+    "reasoning_output_tokens": 17
+  },
+  "event_types": [
+    "thread.started",
+    "turn.started",
+    "item.completed",
+    "item.completed",
+    "turn.completed"
+  ],
+  "cli_diagnostics": [
+    {
+      "kind": "cli_warning",
+      "cli_resolved_model": null
+    }
+  ],
+  "prompt": "Synthetic continuation test. Current task is ORION-17. Use only the supplied memory. Apply the newest correction for this task, ignore unrelated tasks, and never repeat a verified completed action. Return only JSON with requirements (each requested ID mapped to its exact current code or null if unknown), completed_actions (all known completed action IDs), and next_actions (remaining permitted action IDs). Do not guess a missing value. No tools, files, or external actions.\nRequested requirement IDs: [\"R001\",\"R002\",\"R003\",\"R004\",\"R005\",\"R006\",\"R007\",\"R008\",\"R009\",\"R010\",\"R011\",\"R012\",\"R013\",\"R014\",\"R015\",\"R016\",\"R017\",\"R018\",\"R019\",\"R020\",\"R021\",\"R022\",\"R023\",\"R024\",\"R025\",\"R026\",\"R027\",\"R028\",\"R029\",\"R030\",\"R031\",\"R032\",\"R033\",\"R034\",\"R035\",\"R036\",\"R037\",\"R038\",\"R039\",\"R040\",\"R041\",\"R042\",\"R043\",\"R044\",\"R045\",\"R046\",\"R047\",\"R048\",\"R998\",\"R999\"]\n<MEMORY>\nTASK ORION-17 ROLLING HANDOFF\n\nScope:\n- Synthetic task: ORION-17 only.\n- Inputs used: previous ORION-17 summary + Checkpoint 2 event batch.\n- Ignore all LYRA-17, VEGA-17, and DRACO-17 observations; they do not revise ORION-17.\n\nCurrent requirement codes:\n- R001 = `v-jc4VZUM2wwktTHBR`\n- R002 = `v-a5ycS8i4Wr7uxbJm`\n- R003 = `v-DJ539NK9wkm4uPXk`\n- R004 = `v-H9wrEVcFi7grpKu4`\n- R005 = `v-c5iXBdZnDzyYDgZo`\n- R006 = `v-U7qsSkVsajS4nC2s`\n- R007 = `v-qVG2xjQybDh4Bjwu`\n- R008 = `v-no3TXADzYBfyTgrD`\n- R009 = `v-JR9d2bQubahX78v3`\n- R010 = `v-xo5bMNSKuHPD6kV4`\n- R011 = `v-9W4WDLcFv2V6Stbg`\n- R012 = `v-EkFkrRQkSnL4UDx9`\n- R013 = `v-hob5hQmcjreEfzPQ`\n- R014 = `v-gW5NZpBynnjdD6Xo`\n- R015 = `v-LmQqWZMzPVdYeoFj`\n- R016 = `v-GjANnwmzMefe7iJk`\n- R017 = `v-kDchpw774TTetQbS`\n- R018 = `v-Yo2i8Qgd5WWbLUBv`\n- R019 = `v-6Bfk5zQ8sB7b3HdD`\n- R020 = `v-VBchdoxrCgndugx4`\n- R021 = `v-zXFzy63Crx8UWWHX`\n- R022 = `v-Jk6Rh5UeHSREucVu`\n- R023 = `v-Hb5AZreo5LBQs8z6`\n- R024 = `v-2jpzKtmKLokWh489`\n- R025 = `v-UcEqRLwK2RdmWkze`\n- R026 = `v-zi4JURhSiNZArHXh`\n- R027 = `v-EdF9iaRLEUEUXzfW`\n- R028 = `v-KKyTVa8WnirKdG5z`\n- R029 = `v-hBSgJNLSKC7HUeDF`\n- R030 = `v-TFVbsP9WAC8noDYu`\n- R031 = `v-WEdF8P4XkRNSpjdo`\n- R032 = `v-7Zy9wNQzr6aEftNY`\n- R033 = `v-DR4h8zCgSDFUmkaM`\n- R034 = `v-9sVDHkf8PxFjjdSW`\n- R035 = `v-AZY8hsk2vA48Vdaq`\n- R036 = `v-kAceAtLjQQXmSto3`\n- R037 = `v-FFXLtKXjUdpuNrPa`\n- R038 = `v-q2uG6bAhf7mTwbhK`\n- R039 = `v-dcSWGC4rUji5AJfe`\n- R040 = `v-FcdcTkN2Tb7QdPk8`\n- R041 = `v-Qqi5ncKrWNLuf9ND`\n- R042 = `v-guYtM7VsU9n8XPft`\n- R043 = `v-CLnae2U7KQiWh7d9`\n- R044 = `v-NAT5u6a8zV2Bc6JU`\n- R045 = `v-QsY73NF44pTntfU6`\n- R046 = `v-x2vttNicdBrUGWGB`\n- R047 = `v-ovJfEReZUoghgHtE`\n- R048 = `v-LDFF4Zc2fFobSfVq`\n\nLatest corrections applied:\n- R006 replaced obsolete `v-2A8bRHmPRjZDTE3T` with `v-U7qsSkVsajS4nC2s`.\n- R007 replaced obsolete `v-Nyp6mkmJStVYWLXG` with `v-qVG2xjQybDh4Bjwu`.\n- R009 replaced obsolete `v-xNVSEywhBqnjuJbh` with `v-JR9d2bQubahX78v3`.\n- R017 replaced obsolete `v-mgeAUSMA5fXzXPDT` with `v-kDchpw774TTetQbS`.\n- R018 replaced obsolete `v-GjtvABHgwVqP2G25` with `v-Yo2i8Qgd5WWbLUBv`.\n- R020 replaced obsolete `v-ykDNkSTYYko5cbAj` with `v-VBchdoxrCgndugx4`.\n- R023 replaced obsolete `v-NgZJPi3nK3UFdeja` with `v-Hb5AZreo5LBQs8z6`.\n- R029 replaced obsolete `v-9sr23SRPPk8Z6xda` with `v-hBSgJNLSKC7HUeDF`.\n- R031 replaced obsolete `v-RWaP7MhAgGc8sgGM` with `v-WEdF8P4XkRNSpjdo`.\n- R036 replaced obsolete `v-4VHLSyiQQaiWJKW9` with `v-kAceAtLjQQXmSto3`.\n- R039 replaced obsolete `v-2aVgWDVRPs2skn3D` with `v-dcSWGC4rUji5AJfe`.\n\nVerified completed actions, do not repeat:\n- A001 completed successfully; reuse verified result.\n- A002 completed successfully; reuse verified result.\n- A003 completed successfully; reuse verified result.\n- A004 completed successfully; reuse verified result.\n- A005 completed successfully; reuse verified result.\n- A006 completed successfully; reuse verified result.\n\nRemaining permitted next actions:\n- P001: review the next incoming event batch. Not completed.\n- P002: prepare the final handoff when requested. Not completed.\n</MEMORY>\n(nod)",
+  "model": "gpt-5.5",
+  "requested_model": "gpt-5.5",
+  "observed_model": null,
+  "reasoning_effort": "medium",
+  "wall_seconds": 18.5151,
+  "prompt_tokens_estimated": 1706,
+  "response_tokens_estimated": 839,
+  "stderr_present": true,
+  "cached_input_tokens": 13696,
+  "reasoning_tokens": 17,
+  "seed": 17,
+  "checkpoint_tokens": 8000,
+  "arm": "summary",
+  "memory_tokens_estimated": 1448,
+  "memory_sha256": "7b9b5a9816e2cc829b1b06622be51dd58bc3a6f27a46a64918aa3f087337ecd9",
+  "metrics": {
+    "invalid_response": false,
+    "requirements_total": 48,
+    "requirement_failures": 0,
+    "requirement_failure_rate": 0.0,
+    "failed_requirement_ids": [],
+    "known_requirement_abstentions": 0,
+    "corrected_requirements_total": 11,
+    "latest_correction_failures": 0,
+    "stale_value_count": 0,
+    "stale_requirement_ids": [],
+    "completed_actions_total": 6,
+    "completed_action_recall_failures": 0,
+    "repeated_completed_actions": 0,
+    "repeated_completed_action_ids": [],
+    "pending_actions_total": 2,
+    "missing_pending_actions": 0,
+    "invalid_next_actions": 0,
+    "unknown_requirements_total": 2,
+    "unknown_requirement_fabrications": 0
+  }
+}

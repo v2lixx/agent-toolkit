@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+<title id="title">Measured Diary MCP overhead</title>
+<desc id="desc">Two charts show mean serialized token and warm MCP latency costs for three synthetic prompt lengths. Omitting Diary adds no Diary-specific bookkeeping, but total task cost is not measured here.</desc>
+<rect width="1400" height="760" rx="20" fill="#f6f9fa"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="44" y="52" font-size="31" fill="#152e40" text-anchor="start" font-weight="700">What does one Diary block cost locally?</text>
+<text x="44" y="85" font-size="19" fill="#566b79" text-anchor="start" font-weight="400">Measured MCP transport + storage; model thinking and writing are not included.</text>
+<text x="90" y="144" font-size="23" fill="#152e40" text-anchor="start" font-weight="700">Added serialized tokens / block</text>
+<text x="90" y="174" font-size="16" fill="#566b79" text-anchor="start" font-weight="400">Start → one milestone → complete</text>
+<line x1="90" y1="535.0" x2="630" y2="535.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="76" y="541.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">0</text>
+<line x1="90" y1="469.0" x2="630" y2="469.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="76" y="475.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">1,000</text>
+<line x1="90" y1="403.0" x2="630" y2="403.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="76" y="409.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">2,000</text>
+<line x1="90" y1="337.0" x2="630" y2="337.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="76" y="343.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">3,000</text>
+<line x1="90" y1="271.0" x2="630" y2="271.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="76" y="277.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">4,000</text>
+<line x1="90" y1="205.0" x2="630" y2="205.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="76" y="211.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">5,000</text>
+<rect x="141.0" y="485.6694022" width="78" height="49.33059780000002" rx="5" fill="#087f78"/>
+<text x="180.0" y="472.6694022" font-size="19" fill="#087f78" text-anchor="middle" font-weight="700">747</text>
+<text x="180.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">80</text>
+<rect x="321.0" y="438.83140000000003" width="78" height="96.16859999999997" rx="5" fill="#087f78"/>
+<text x="360.0" y="425.83140000000003" font-size="19" fill="#087f78" text-anchor="middle" font-weight="700">1,457</text>
+<text x="360.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">800</text>
+<rect x="501.0" y="227.2882" width="78" height="307.71180000000004" rx="5" fill="#087f78"/>
+<text x="540.0" y="214.2882" font-size="19" fill="#087f78" text-anchor="middle" font-weight="700">4,662</text>
+<text x="540.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">4,000</text>
+<text x="360.0" y="601" font-size="17" fill="#566b79" text-anchor="middle" font-weight="400">Original prompt length (o200k_base tokens)</text>
+<text x="800" y="144" font-size="23" fill="#152e40" text-anchor="start" font-weight="700">Warm MCP time / block (ms)</text>
+<text x="800" y="174" font-size="16" fill="#566b79" text-anchor="start" font-weight="400">Start → one milestone → complete</text>
+<line x1="800" y1="535.0" x2="1300" y2="535.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="541.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">0</text>
+<line x1="800" y1="480.0" x2="1300" y2="480.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="486.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">5</text>
+<line x1="800" y1="425.0" x2="1300" y2="425.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="431.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">10</text>
+<line x1="800" y1="370.0" x2="1300" y2="370.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="376.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">15</text>
+<line x1="800" y1="315.0" x2="1300" y2="315.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="321.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">20</text>
+<line x1="800" y1="260.0" x2="1300" y2="260.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="266.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">25</text>
+<line x1="800" y1="205.0" x2="1300" y2="205.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="786" y="211.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">30</text>
+<rect x="844.3333333333334" y="384.6806" width="78" height="150.31939999999997" rx="5" fill="#bd581d"/>
+<text x="883.3333333333334" y="333.24879999999996" font-size="19" fill="#bd581d" text-anchor="middle" font-weight="700">13.67</text>
+<text x="883.3333333333334" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">80</text>
+<line x1="883.3333333333334" y1="384.6806" x2="883.3333333333334" y2="346.24879999999996" stroke="#152e40" stroke-width="2"/>
+<line x1="874.3333333333334" y1="346.24879999999996" x2="892.3333333333334" y2="346.24879999999996" stroke="#152e40" stroke-width="2"/>
+<rect x="1011.0" y="373.0965" width="78" height="161.9035" rx="5" fill="#bd581d"/>
+<text x="1050.0" y="315.9139" font-size="19" fill="#bd581d" text-anchor="middle" font-weight="700">14.72</text>
+<text x="1050.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">800</text>
+<line x1="1050.0" y1="373.0965" x2="1050.0" y2="328.9139" stroke="#152e40" stroke-width="2"/>
+<line x1="1041.0" y1="328.9139" x2="1059.0" y2="328.9139" stroke="#152e40" stroke-width="2"/>
+<rect x="1177.6666666666667" y="331.6749" width="78" height="203.32510000000002" rx="5" fill="#bd581d"/>
+<text x="1216.6666666666667" y="249.65320000000003" font-size="19" fill="#bd581d" text-anchor="middle" font-weight="700">18.48</text>
+<text x="1216.6666666666667" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">4,000</text>
+<line x1="1216.6666666666667" y1="331.6749" x2="1216.6666666666667" y2="262.6532" stroke="#152e40" stroke-width="2"/>
+<line x1="1207.6666666666667" y1="262.6532" x2="1225.6666666666667" y2="262.6532" stroke="#152e40" stroke-width="2"/>
+<text x="1050.0" y="601" font-size="17" fill="#566b79" text-anchor="middle" font-weight="400">Original prompt length (o200k_base tokens)</text>
+<text x="44" y="649" font-size="18" fill="#152e40" text-anchor="start" font-weight="400">90 blocks · warm connection · bars = mean · time whiskers = empirical p95</text>
+<text x="44" y="681" font-size="18" fill="#152e40" text-anchor="start" font-weight="400">No Diary: 0 added Diary tokens and 0 Diary calls by definition — not zero total task cost.</text>
+<text x="44" y="713" font-size="17" fill="#566b79" text-anchor="start" font-weight="400">Token counts are JSON serialization proxies, not provider billing. Single-host synthetic workload.</text>
+</g>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 790" role="img" aria-labelledby="title desc">
+  <title id="title">Anatomy of one Diary work block</title>
+  <desc id="desc">A work block has six ordered fields: local identity and timestamp, exact prompts, an ordered plan, verified progress, journal lessons, and exactly one lifecycle status. Stable entry identifiers link a resumed copy to its paused source within the same Diary.</desc>
+  <rect width="1200" height="790" rx="20" fill="#f6f9fa"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#152e40">
+    <text x="42" y="50" font-size="30" font-weight="700">The block is the unit of continuity</text>
+    <text x="42" y="82" font-size="18" fill="#566b79">One coherent piece of work, including its corrections — not one new block for every message.</text>
+    <rect x="42" y="115" width="1116" height="552" rx="14" fill="white" stroke="#c4d4dc"/>
+    <path d="M42 208H1158 M42 300H1158 M42 392H1158 M42 484H1158 M42 576H1158" stroke="#dae3e7"/>
+    <path d="M366 115V667" stroke="#dae3e7"/>
+    <g font-size="21" font-weight="700">
+      <text x="65" y="153">1 · Identity + time</text>
+      <text x="65" y="247">2 · Exact prompt</text>
+      <text x="65" y="339">3 · Ordered plan</text>
+      <text x="65" y="431">4 · Progress</text>
+      <text x="65" y="523">5 · Journal + lessons</text>
+      <text x="65" y="615">6 · Lifecycle status</text>
+    </g>
+    <g font-size="16" fill="#566b79">
+      <text x="65" y="179">Which record am I continuing?</text>
+      <text x="65" y="273">What was actually requested?</text>
+      <text x="65" y="365">What is the current order of work?</text>
+      <text x="65" y="457">What is verified, and what remains?</text>
+      <text x="65" y="549">What should the next self avoid?</text>
+      <text x="65" y="641">What is the real state of the work?</text>
+    </g>
+    <g font-size="18">
+      <text x="390" y="151">Local block number · stable entry ID · timestamp · task identity</text>
+      <text x="390" y="180" fill="#566b79">A resumed copy also names its source block and entry ID.</text>
+      <text x="390" y="245">Original user text, preserved verbatim</text>
+      <text x="390" y="274" fill="#566b79">Related corrections are appended with “+”; old requests remain visible.</text>
+      <text x="390" y="337">Numbered steps in execution-priority order</text>
+      <text x="390" y="366" fill="#566b79">A correction may replace this plan without erasing the prompt history.</text>
+      <text x="390" y="429">Milestones · evidence · finished steps · next action</text>
+      <text x="390" y="458" fill="#566b79">Write a checkpoint before switching direction or responding to a correction.</text>
+      <text x="390" y="521">Misunderstanding → correction → next-self guidance</text>
+      <text x="390" y="550" fill="#566b79">Store useful lessons, not a transcript of private model reasoning.</text>
+      <text x="390" y="613" fill="#087f78" font-weight="700">Working  /  Complete  /  Cancelled  /  Paused</text>
+      <text x="390" y="642" fill="#566b79">Exactly one canonical stored tag. Unfinished work is never “complete.”</text>
+    </g>
+    <text x="42" y="713" font-size="18" font-weight="700">Ownership is outside the conversation's memory.</text>
+    <text x="42" y="744" font-size="17" fill="#566b79">The surrounding Diary and scope metadata isolate the task. Numbers and resume links never cross Diaries.</text>
+  </g>
+</svg>

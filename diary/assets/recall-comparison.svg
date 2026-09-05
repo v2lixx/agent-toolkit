@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-labelledby="title desc">
+<title id="title">Diary versus rolling-summary recall pilot</title>
+<desc id="desc">Side-by-side curves plot exact requirement recall failure against cumulative synthetic history tokens. The experiment compares harness-managed external records and rolling summaries, not native model memory.</desc>
+<rect width="1400" height="760" rx="20" fill="#f6f9fa"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="44" y="52" font-size="29" fill="#152e40" text-anchor="start" font-weight="700">Can a fresh continuation recover the current requirements?</text>
+<text x="44" y="85" font-size="19" fill="#566b79" text-anchor="start" font-weight="400">Exact-code recall failure after controlled context resets · lower is better</text>
+<text x="95" y="139" font-size="23" fill="#152e40" text-anchor="start" font-weight="700">Without Diary: rolling summary</text>
+<text x="95" y="173" font-size="17" fill="#566b79" text-anchor="start" font-weight="400">Requirement recall failure (%)</text>
+<line x1="95" y1="535.0" x2="595" y2="535.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="81" y="541.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">0</text>
+<line x1="95" y1="469.0" x2="595" y2="469.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="81" y="475.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">20</text>
+<line x1="95" y1="403.0" x2="595" y2="403.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="81" y="409.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">40</text>
+<line x1="95" y1="337.0" x2="595" y2="337.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="81" y="343.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">60</text>
+<line x1="95" y1="271.0" x2="595" y2="271.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="81" y="277.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">80</text>
+<line x1="95" y1="205.0" x2="595" y2="205.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="81" y="211.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">100</text>
+<polyline points="95.0,535.0 166.42857142857144,535.0 309.2857142857143,535.0 595.0,535.0" fill="none" stroke="#bd581d" stroke-width="3"/>
+<line x1="95.0" y1="535.0" x2="95.0" y2="535.0" stroke="#bd581d" stroke-width="3"/>
+<circle cx="95.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<circle cx="95.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<circle cx="95.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<text x="95.0" y="517.0" font-size="18" fill="#bd581d" text-anchor="middle" font-weight="700">0.0%</text>
+<text x="95.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">4k</text>
+<line x1="166.42857142857144" y1="535.0" x2="166.42857142857144" y2="535.0" stroke="#bd581d" stroke-width="3"/>
+<circle cx="166.42857142857144" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<circle cx="166.42857142857144" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<circle cx="166.42857142857144" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<text x="166.42857142857144" y="517.0" font-size="18" fill="#bd581d" text-anchor="middle" font-weight="700">0.0%</text>
+<text x="166.42857142857144" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">8k</text>
+<line x1="309.2857142857143" y1="535.0" x2="309.2857142857143" y2="535.0" stroke="#bd581d" stroke-width="3"/>
+<circle cx="309.2857142857143" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<circle cx="309.2857142857143" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<circle cx="309.2857142857143" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<text x="309.2857142857143" y="517.0" font-size="18" fill="#bd581d" text-anchor="middle" font-weight="700">0.0%</text>
+<text x="309.2857142857143" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">16k</text>
+<line x1="595.0" y1="535.0" x2="595.0" y2="535.0" stroke="#bd581d" stroke-width="3"/>
+<circle cx="595.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<circle cx="595.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<circle cx="595.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#bd581d" stroke-width="2"/>
+<text x="595.0" y="517.0" font-size="18" fill="#bd581d" text-anchor="middle" font-weight="700">0.0%</text>
+<text x="595.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">32k</text>
+<text x="345.0" y="602" font-size="16" fill="#566b79" text-anchor="middle" font-weight="400">Cumulative synthetic history tokens (o200k_base)</text>
+<text x="810" y="139" font-size="23" fill="#152e40" text-anchor="start" font-weight="700">With Diary: recovered record</text>
+<text x="810" y="173" font-size="17" fill="#566b79" text-anchor="start" font-weight="400">Requirement recall failure (%)</text>
+<line x1="810" y1="535.0" x2="1310" y2="535.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="796" y="541.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">0</text>
+<line x1="810" y1="469.0" x2="1310" y2="469.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="796" y="475.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">20</text>
+<line x1="810" y1="403.0" x2="1310" y2="403.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="796" y="409.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">40</text>
+<line x1="810" y1="337.0" x2="1310" y2="337.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="796" y="343.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">60</text>
+<line x1="810" y1="271.0" x2="1310" y2="271.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="796" y="277.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">80</text>
+<line x1="810" y1="205.0" x2="1310" y2="205.0" stroke="#dae3e7" stroke-width="1"/>
+<text x="796" y="211.0" font-size="16" fill="#566b79" text-anchor="end" font-weight="400">100</text>
+<polyline points="810.0,535.0 881.4285714285714,535.0 1024.2857142857142,535.0 1310.0,535.0" fill="none" stroke="#087f78" stroke-width="3"/>
+<line x1="810.0" y1="535.0" x2="810.0" y2="535.0" stroke="#087f78" stroke-width="3"/>
+<circle cx="810.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<circle cx="810.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<circle cx="810.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<text x="810.0" y="517.0" font-size="18" fill="#087f78" text-anchor="middle" font-weight="700">0.0%</text>
+<text x="810.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">4k</text>
+<line x1="881.4285714285714" y1="535.0" x2="881.4285714285714" y2="535.0" stroke="#087f78" stroke-width="3"/>
+<circle cx="881.4285714285714" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<circle cx="881.4285714285714" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<circle cx="881.4285714285714" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<text x="881.4285714285714" y="517.0" font-size="18" fill="#087f78" text-anchor="middle" font-weight="700">0.0%</text>
+<text x="881.4285714285714" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">8k</text>
+<line x1="1024.2857142857142" y1="535.0" x2="1024.2857142857142" y2="535.0" stroke="#087f78" stroke-width="3"/>
+<circle cx="1024.2857142857142" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<circle cx="1024.2857142857142" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<circle cx="1024.2857142857142" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<text x="1024.2857142857142" y="517.0" font-size="18" fill="#087f78" text-anchor="middle" font-weight="700">0.0%</text>
+<text x="1024.2857142857142" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">16k</text>
+<line x1="1310.0" y1="535.0" x2="1310.0" y2="535.0" stroke="#087f78" stroke-width="3"/>
+<circle cx="1310.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<circle cx="1310.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<circle cx="1310.0" cy="535.0" r="5" fill="#f6f9fa" stroke="#087f78" stroke-width="2"/>
+<text x="1310.0" y="517.0" font-size="18" fill="#087f78" text-anchor="middle" font-weight="700">0.0%</text>
+<text x="1310.0" y="564" font-size="18" fill="#152e40" text-anchor="middle" font-weight="400">32k</text>
+<text x="1060.0" y="602" font-size="16" fill="#566b79" text-anchor="middle" font-weight="400">Cumulative synthetic history tokens (o200k_base)</text>
+<text x="44" y="649" font-size="18" fill="#152e40" text-anchor="start" font-weight="400">gpt-5.5 · medium effort · 3 histories · means + observed seed ranges</text>
+<text x="44" y="681" font-size="17" fill="#152e40" text-anchor="start" font-weight="400">Lines connect measured checkpoints, not a fitted forgetting law. Task requirements also grow: 32 → 48 → 64 → 80.</text>
+<text x="44" y="713" font-size="17" fill="#566b79" text-anchor="start" font-weight="400">Harness-managed memory; unequal context lengths. Not natural compaction or a universal model-memory score.</text>
+</g>
+</svg>

@@ -1,0 +1,4574 @@
+{
+  "schema_version": 1,
+  "experiment": "actual_stdio_mcp_bookkeeping_overhead",
+  "generated_at_utc": "2026-09-05T04:42:05.222952+00:00",
+  "environment": {
+    "python": "3.11.9",
+    "os": "Darwin",
+    "os_release": "25.3.0",
+    "architecture": "arm64",
+    "mcp_version": "1.29.0",
+    "tiktoken_version": "0.14.0",
+    "package_version": "0.1.0"
+  },
+  "methodology": {
+    "cycle": [
+      "diary_start",
+      "diary_progress_append",
+      "diary_set_status"
+    ],
+    "token_encoding": "o200k_base",
+    "token_counting": "Tokenize compact, sorted-key, ensure_ascii=false JSON for tools/call params and SDK CallToolResult; excludes JSON-RPC framing and host chat wrappers.",
+    "result_text_only": "Secondary per-operation count for text content only; hosts may expose different result envelopes.",
+    "warm_latency": "Tool request round trip on one already initialized server; excludes startup, schema retrieval, tokenization, and model work.",
+    "fresh_bridge_latency": "One fresh client and server process per tool call, including initialization, list_tools, call, shutdown, and subprocess collection.",
+    "percentile": "Nearest-rank empirical p95; small sample sizes limit tail estimates.",
+    "scenarios": "Synthetic prompt lengths 80/800/4000 o200k_base tokens; identical three-step plan and one progress update; no model executes these tasks.",
+    "isolation": "Temporary configuration and storage; read-only provenance check before all writes; no existing journals touched.",
+    "validation": "Reject unknown MCP input keys against live schemas; after every cycle, read back the selected block and assert exact prompt, final progress, journal, and completed status. Validation read latency/tokens are excluded from the measured three-write cycle.",
+    "excluded": [
+      "LLM inference",
+      "reasoning tokens",
+      "planning generation",
+      "provider billing",
+      "network model latency",
+      "rework saved",
+      "end-to-end task time",
+      "compaction recovery"
+    ],
+    "limitations": [
+      "Single host and run, sequential scenarios, no CPU scheduling control.",
+      "Random entry IDs, hashes, and temporary path lengths affect serialization token counts.",
+      "Fresh bridge includes process/import overhead; it is not representative of a persistent host connection.",
+      "Completed blocks accumulate within each scenario; this is not a large-history scalability test."
+    ]
+  },
+  "no_diary_bookkeeping_baseline": {
+    "calls_per_block": 0,
+    "serialized_tokens_per_block": 0,
+    "diary_bookkeeping_ms_per_block": 0,
+    "interpretation": "Definition of omitting Diary bookkeeping, not an independently measured model/task baseline."
+  },
+  "startup": {
+    "observed_initialize_and_list_tools_ms": 254.8696,
+    "tool_count": 16,
+    "token_proxies": {
+      "tools_list_json_tokens": 4223,
+      "server_instructions_text_tokens": 408,
+      "protocol_text_tokens": 4044,
+      "skill_text_tokens": 1664
+    },
+    "reference_bundle_sum_tokens": 10339,
+    "illustrative_amortization_over_100_blocks_tokens": 103.39,
+    "interpretation": "Separate reference exposure costs, not charged once per measured block. Actual host prompt assembly, caching, and repeated recovery reads differ."
+  },
+  "source_hashes": {
+    "measure_mcp_overhead.py": "5cdb31ecce2be3d49f7df72c77602c4b600a38a06506208ae0fed3f5df27a910",
+    "continuity_mcp.py": "4aa5066f3775a1f1c092fd61b9b58426ca0ab3e7e4a41f30bee2bc5d3fe21fb5",
+    "continuity_core.py": "e7ab737b610bc714f27c5ba29d7cd456e4cffc62d2b3917808056988f13599eb",
+    "CONTINUITY_PROTOCOL.md": "4e5c737f3b1b62f65560e1a5c48caeb7accfa3b90aa6dfd8e7b2869beacbeee0",
+    "SKILL.md": "8f0ebbe0c7d5073e468e75a509717245e0aa872171fcef1e2f359519ccfa2bd5"
+  },
+  "groups": [
+    {
+      "mode": "warm",
+      "scenario": "short",
+      "prompt_tokens": 80,
+      "prompt_characters": 485,
+      "blocks": 30,
+      "history_growth": "All measured blocks in this scenario/mode share one initially empty Diary.",
+      "summary": {
+        "cycle_elapsed_ms": {
+          "n": 30,
+          "mean": 13.6654,
+          "median": 13.6827,
+          "p95_nearest_rank": 17.1592,
+          "minimum": 10.3866,
+          "maximum": 18.3326
+        },
+        "cycle_serialized_input_tokens": {
+          "n": 30,
+          "mean": 286.4667,
+          "median": 287.0,
+          "p95_nearest_rank": 291,
+          "minimum": 281,
+          "maximum": 293
+        },
+        "cycle_serialized_result_tokens": {
+          "n": 30,
+          "mean": 460.9667,
+          "median": 460.0,
+          "p95_nearest_rank": 470,
+          "minimum": 453,
+          "maximum": 471
+        },
+        "cycle_serialized_input_plus_result_tokens": {
+          "n": 30,
+          "mean": 747.4333,
+          "median": 746.5,
+          "p95_nearest_rank": 761,
+          "minimum": 735,
+          "maximum": 763
+        }
+      },
+      "operation_latency_ms": {
+        "diary_start": {
+          "n": 30,
+          "mean": 4.3397,
+          "median": 4.141,
+          "p95_nearest_rank": 5.6036,
+          "minimum": 3.2319,
+          "maximum": 5.67
+        },
+        "diary_progress_append": {
+          "n": 30,
+          "mean": 4.5903,
+          "median": 4.6095,
+          "p95_nearest_rank": 5.7168,
+          "minimum": 3.4384,
+          "maximum": 6.3533
+        },
+        "diary_set_status": {
+          "n": 30,
+          "mean": 4.7354,
+          "median": 4.6858,
+          "p95_nearest_rank": 5.9711,
+          "minimum": 3.3333,
+          "maximum": 6.3093
+        }
+      },
+      "samples": [
+        {
+          "block_index": 1,
+          "cycle_elapsed_ms": 13.9482,
+          "cycle_serialized_input_tokens": 291,
+          "cycle_serialized_result_tokens": 470,
+          "cycle_serialized_input_plus_result_tokens": 761,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.4306,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 212,
+              "serialized_input_plus_result_tokens": 350,
+              "result_text_only_tokens": 186
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.0012,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.5164,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 159,
+              "serialized_input_plus_result_tokens": 238,
+              "result_text_only_tokens": 133
+            }
+          ]
+        },
+        {
+          "block_index": 2,
+          "cycle_elapsed_ms": 11.2755,
+          "cycle_serialized_input_tokens": 287,
+          "cycle_serialized_result_tokens": 462,
+          "cycle_serialized_input_plus_result_tokens": 749,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.098,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 210,
+              "serialized_input_plus_result_tokens": 348,
+              "result_text_only_tokens": 184
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.8442,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.3333,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 232,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 3,
+          "cycle_elapsed_ms": 10.7832,
+          "cycle_serialized_input_tokens": 287,
+          "cycle_serialized_result_tokens": 460,
+          "cycle_serialized_input_plus_result_tokens": 747,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.245,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 210,
+              "serialized_input_plus_result_tokens": 348,
+              "result_text_only_tokens": 184
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.894,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.6442,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 4,
+          "cycle_elapsed_ms": 10.3866,
+          "cycle_serialized_input_tokens": 283,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 741,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.3968,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 208,
+              "serialized_input_plus_result_tokens": 346,
+              "result_text_only_tokens": 182
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.4384,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.5514,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 5,
+          "cycle_elapsed_ms": 10.8149,
+          "cycle_serialized_input_tokens": 289,
+          "cycle_serialized_result_tokens": 466,
+          "cycle_serialized_input_plus_result_tokens": 755,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.2319,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 211,
+              "serialized_input_plus_result_tokens": 349,
+              "result_text_only_tokens": 185
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.737,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.846,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 157,
+              "serialized_input_plus_result_tokens": 235,
+              "result_text_only_tokens": 131
+            }
+          ]
+        },
+        {
+          "block_index": 6,
+          "cycle_elapsed_ms": 11.0062,
+          "cycle_serialized_input_tokens": 293,
+          "cycle_serialized_result_tokens": 470,
+          "cycle_serialized_input_plus_result_tokens": 763,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.3953,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 213,
+              "serialized_input_plus_result_tokens": 351,
+              "result_text_only_tokens": 187
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.684,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 100,
+              "serialized_input_plus_result_tokens": 175,
+              "result_text_only_tokens": 77
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.9269,
+              "serialized_call_input_tokens": 80,
+              "serialized_call_result_tokens": 157,
+              "serialized_input_plus_result_tokens": 237,
+              "result_text_only_tokens": 131
+            }
+          ]
+        },
+        {
+          "block_index": 7,
+          "cycle_elapsed_ms": 11.8239,
+          "cycle_serialized_input_tokens": 281,
+          "cycle_serialized_result_tokens": 457,
+          "cycle_serialized_input_plus_result_tokens": 738,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.73,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 207,
+              "serialized_input_plus_result_tokens": 345,
+              "result_text_only_tokens": 181
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.0364,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 94,
+              "serialized_input_plus_result_tokens": 163,
+              "result_text_only_tokens": 71
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.0575,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 156,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 130
+            }
+          ]
+        },
+        {
+          "block_index": 8,
+          "cycle_elapsed_ms": 11.1055,
+          "cycle_serialized_input_tokens": 285,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 743,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.4287,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 347,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.6881,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.9887,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 229,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 9,
+          "cycle_elapsed_ms": 11.3276,
+          "cycle_serialized_input_tokens": 283,
+          "cycle_serialized_result_tokens": 453,
+          "cycle_serialized_input_plus_result_tokens": 736,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.5448,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 208,
+              "serialized_input_plus_result_tokens": 346,
+              "result_text_only_tokens": 182
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.7113,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.0715,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 150,
+              "serialized_input_plus_result_tokens": 225,
+              "result_text_only_tokens": 124
+            }
+          ]
+        },
+        {
+          "block_index": 10,
+          "cycle_elapsed_ms": 12.0184,
+          "cycle_serialized_input_tokens": 283,
+          "cycle_serialized_result_tokens": 457,
+          "cycle_serialized_input_plus_result_tokens": 740,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.0513,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 208,
+              "serialized_input_plus_result_tokens": 346,
+              "result_text_only_tokens": 182
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.9341,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.033,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 229,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 11,
+          "cycle_elapsed_ms": 12.7119,
+          "cycle_serialized_input_tokens": 281,
+          "cycle_serialized_result_tokens": 454,
+          "cycle_serialized_input_plus_result_tokens": 735,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.0031,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 207,
+              "serialized_input_plus_result_tokens": 345,
+              "result_text_only_tokens": 181
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.326,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 94,
+              "serialized_input_plus_result_tokens": 163,
+              "result_text_only_tokens": 71
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.3828,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 227,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 12,
+          "cycle_elapsed_ms": 12.377,
+          "cycle_serialized_input_tokens": 289,
+          "cycle_serialized_result_tokens": 464,
+          "cycle_serialized_input_plus_result_tokens": 753,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.8207,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 211,
+              "serialized_input_plus_result_tokens": 349,
+              "result_text_only_tokens": 185
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.151,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.4053,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 13,
+          "cycle_elapsed_ms": 12.8703,
+          "cycle_serialized_input_tokens": 289,
+          "cycle_serialized_result_tokens": 469,
+          "cycle_serialized_input_plus_result_tokens": 758,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.0677,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 211,
+              "serialized_input_plus_result_tokens": 349,
+              "result_text_only_tokens": 185
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.4149,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.3877,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 160,
+              "serialized_input_plus_result_tokens": 238,
+              "result_text_only_tokens": 134
+            }
+          ]
+        },
+        {
+          "block_index": 14,
+          "cycle_elapsed_ms": 12.7561,
+          "cycle_serialized_input_tokens": 285,
+          "cycle_serialized_result_tokens": 460,
+          "cycle_serialized_input_plus_result_tokens": 745,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.7939,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 347,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.7321,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.2301,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 231,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 15,
+          "cycle_elapsed_ms": 12.8263,
+          "cycle_serialized_input_tokens": 291,
+          "cycle_serialized_result_tokens": 465,
+          "cycle_serialized_input_plus_result_tokens": 756,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.989,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 212,
+              "serialized_input_plus_result_tokens": 350,
+              "result_text_only_tokens": 186
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.5438,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.2935,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 16,
+          "cycle_elapsed_ms": 13.536,
+          "cycle_serialized_input_tokens": 285,
+          "cycle_serialized_result_tokens": 461,
+          "cycle_serialized_input_plus_result_tokens": 746,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.0057,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 347,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.6752,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.8551,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 156,
+              "serialized_input_plus_result_tokens": 232,
+              "result_text_only_tokens": 130
+            }
+          ]
+        },
+        {
+          "block_index": 17,
+          "cycle_elapsed_ms": 14.7841,
+          "cycle_serialized_input_tokens": 289,
+          "cycle_serialized_result_tokens": 471,
+          "cycle_serialized_input_plus_result_tokens": 760,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.6952,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 211,
+              "serialized_input_plus_result_tokens": 349,
+              "result_text_only_tokens": 185
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.0841,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.0048,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 162,
+              "serialized_input_plus_result_tokens": 240,
+              "result_text_only_tokens": 136
+            }
+          ]
+        },
+        {
+          "block_index": 18,
+          "cycle_elapsed_ms": 13.8295,
+          "cycle_serialized_input_tokens": 281,
+          "cycle_serialized_result_tokens": 457,
+          "cycle_serialized_input_plus_result_tokens": 738,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.184,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 207,
+              "serialized_input_plus_result_tokens": 345,
+              "result_text_only_tokens": 181
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.7252,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 94,
+              "serialized_input_plus_result_tokens": 163,
+              "result_text_only_tokens": 71
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.9203,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 156,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 130
+            }
+          ]
+        },
+        {
+          "block_index": 19,
+          "cycle_elapsed_ms": 14.5929,
+          "cycle_serialized_input_tokens": 289,
+          "cycle_serialized_result_tokens": 465,
+          "cycle_serialized_input_plus_result_tokens": 754,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.7522,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 211,
+              "serialized_input_plus_result_tokens": 349,
+              "result_text_only_tokens": 185
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.788,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.0527,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 156,
+              "serialized_input_plus_result_tokens": 234,
+              "result_text_only_tokens": 130
+            }
+          ]
+        },
+        {
+          "block_index": 20,
+          "cycle_elapsed_ms": 14.2873,
+          "cycle_serialized_input_tokens": 291,
+          "cycle_serialized_result_tokens": 465,
+          "cycle_serialized_input_plus_result_tokens": 756,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.7083,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 212,
+              "serialized_input_plus_result_tokens": 350,
+              "result_text_only_tokens": 186
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.5285,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.0505,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 21,
+          "cycle_elapsed_ms": 14.9189,
+          "cycle_serialized_input_tokens": 287,
+          "cycle_serialized_result_tokens": 462,
+          "cycle_serialized_input_plus_result_tokens": 749,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.7998,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 210,
+              "serialized_input_plus_result_tokens": 348,
+              "result_text_only_tokens": 184
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.8948,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.2243,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 232,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 22,
+          "cycle_elapsed_ms": 14.6418,
+          "cycle_serialized_input_tokens": 283,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 741,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.4699,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 208,
+              "serialized_input_plus_result_tokens": 346,
+              "result_text_only_tokens": 182
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.0936,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.0783,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 23,
+          "cycle_elapsed_ms": 14.6639,
+          "cycle_serialized_input_tokens": 285,
+          "cycle_serialized_result_tokens": 457,
+          "cycle_serialized_input_plus_result_tokens": 742,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.4775,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 347,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.9357,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.2507,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 152,
+              "serialized_input_plus_result_tokens": 228,
+              "result_text_only_tokens": 126
+            }
+          ]
+        },
+        {
+          "block_index": 24,
+          "cycle_elapsed_ms": 15.4377,
+          "cycle_serialized_input_tokens": 287,
+          "cycle_serialized_result_tokens": 453,
+          "cycle_serialized_input_plus_result_tokens": 740,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.7225,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 210,
+              "serialized_input_plus_result_tokens": 348,
+              "result_text_only_tokens": 184
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.1583,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.5569,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 146,
+              "serialized_input_plus_result_tokens": 223,
+              "result_text_only_tokens": 120
+            }
+          ]
+        },
+        {
+          "block_index": 25,
+          "cycle_elapsed_ms": 15.6685,
+          "cycle_serialized_input_tokens": 291,
+          "cycle_serialized_result_tokens": 467,
+          "cycle_serialized_input_plus_result_tokens": 758,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.0811,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 212,
+              "serialized_input_plus_result_tokens": 350,
+              "result_text_only_tokens": 186
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.0247,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.5627,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 156,
+              "serialized_input_plus_result_tokens": 235,
+              "result_text_only_tokens": 130
+            }
+          ]
+        },
+        {
+          "block_index": 26,
+          "cycle_elapsed_ms": 16.6184,
+          "cycle_serialized_input_tokens": 287,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 745,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.1078,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 210,
+              "serialized_input_plus_result_tokens": 348,
+              "result_text_only_tokens": 184
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.5395,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.9711,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 151,
+              "serialized_input_plus_result_tokens": 228,
+              "result_text_only_tokens": 125
+            }
+          ]
+        },
+        {
+          "block_index": 27,
+          "cycle_elapsed_ms": 16.3786,
+          "cycle_serialized_input_tokens": 283,
+          "cycle_serialized_result_tokens": 454,
+          "cycle_serialized_input_plus_result_tokens": 737,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.2117,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 208,
+              "serialized_input_plus_result_tokens": 346,
+              "result_text_only_tokens": 182
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.439,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.7279,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 151,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 125
+            }
+          ]
+        },
+        {
+          "block_index": 28,
+          "cycle_elapsed_ms": 17.0813,
+          "cycle_serialized_input_tokens": 287,
+          "cycle_serialized_result_tokens": 460,
+          "cycle_serialized_input_plus_result_tokens": 747,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.6036,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 210,
+              "serialized_input_plus_result_tokens": 348,
+              "result_text_only_tokens": 184
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.6161,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.8616,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 29,
+          "cycle_elapsed_ms": 17.1592,
+          "cycle_serialized_input_tokens": 287,
+          "cycle_serialized_result_tokens": 463,
+          "cycle_serialized_input_plus_result_tokens": 750,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.4758,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 210,
+              "serialized_input_plus_result_tokens": 348,
+              "result_text_only_tokens": 184
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.7168,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.9666,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 156,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 130
+            }
+          ]
+        },
+        {
+          "block_index": 30,
+          "cycle_elapsed_ms": 18.3326,
+          "cycle_serialized_input_tokens": 285,
+          "cycle_serialized_result_tokens": 455,
+          "cycle_serialized_input_plus_result_tokens": 740,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.67,
+              "serialized_call_input_tokens": 138,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 347,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 6.3533,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.3093,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 150,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 124
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "warm",
+      "scenario": "medium",
+      "prompt_tokens": 800,
+      "prompt_characters": 4874,
+      "blocks": 30,
+      "history_growth": "All measured blocks in this scenario/mode share one initially empty Diary.",
+      "summary": {
+        "cycle_elapsed_ms": {
+          "n": 30,
+          "mean": 14.7185,
+          "median": 14.6654,
+          "p95_nearest_rank": 18.7351,
+          "minimum": 10.9606,
+          "maximum": 19.4895
+        },
+        "cycle_serialized_input_tokens": {
+          "n": 30,
+          "mean": 1005.1333,
+          "median": 1004.0,
+          "p95_nearest_rank": 1012,
+          "minimum": 996,
+          "maximum": 1016
+        },
+        "cycle_serialized_result_tokens": {
+          "n": 30,
+          "mean": 451.9667,
+          "median": 451.5,
+          "p95_nearest_rank": 461,
+          "minimum": 439,
+          "maximum": 470
+        },
+        "cycle_serialized_input_plus_result_tokens": {
+          "n": 30,
+          "mean": 1457.1,
+          "median": 1456.0,
+          "p95_nearest_rank": 1472,
+          "minimum": 1435,
+          "maximum": 1486
+        }
+      },
+      "operation_latency_ms": {
+        "diary_start": {
+          "n": 30,
+          "mean": 4.7676,
+          "median": 4.6675,
+          "p95_nearest_rank": 6.0411,
+          "minimum": 3.5666,
+          "maximum": 6.5014
+        },
+        "diary_progress_append": {
+          "n": 30,
+          "mean": 4.8876,
+          "median": 4.9564,
+          "p95_nearest_rank": 6.2256,
+          "minimum": 3.6323,
+          "maximum": 6.4218
+        },
+        "diary_set_status": {
+          "n": 30,
+          "mean": 5.0633,
+          "median": 5.0206,
+          "p95_nearest_rank": 6.5663,
+          "minimum": 3.5368,
+          "maximum": 6.8188
+        }
+      },
+      "samples": [
+        {
+          "block_index": 1,
+          "cycle_elapsed_ms": 12.2381,
+          "cycle_serialized_input_tokens": 1010,
+          "cycle_serialized_result_tokens": 454,
+          "cycle_serialized_input_plus_result_tokens": 1464,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.6883,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 1061,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.8859,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.6639,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 151,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 125
+            }
+          ]
+        },
+        {
+          "block_index": 2,
+          "cycle_elapsed_ms": 11.3305,
+          "cycle_serialized_input_tokens": 1004,
+          "cycle_serialized_result_tokens": 450,
+          "cycle_serialized_input_plus_result_tokens": 1454,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.7924,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 201,
+              "serialized_input_plus_result_tokens": 1058,
+              "result_text_only_tokens": 175
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.0013,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.5368,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 229,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 3,
+          "cycle_elapsed_ms": 10.9606,
+          "cycle_serialized_input_tokens": 1010,
+          "cycle_serialized_result_tokens": 461,
+          "cycle_serialized_input_plus_result_tokens": 1471,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.5986,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 1061,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.6323,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.7297,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 158,
+              "serialized_input_plus_result_tokens": 237,
+              "result_text_only_tokens": 132
+            }
+          ]
+        },
+        {
+          "block_index": 4,
+          "cycle_elapsed_ms": 11.6768,
+          "cycle_serialized_input_tokens": 1010,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 1468,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.7205,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 1061,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.8401,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.1162,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 234,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 5,
+          "cycle_elapsed_ms": 11.4551,
+          "cycle_serialized_input_tokens": 1002,
+          "cycle_serialized_result_tokens": 448,
+          "cycle_serialized_input_plus_result_tokens": 1450,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.5666,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 200,
+              "serialized_input_plus_result_tokens": 1057,
+              "result_text_only_tokens": 174
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.0444,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.8441,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 228,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 6,
+          "cycle_elapsed_ms": 11.8754,
+          "cycle_serialized_input_tokens": 1016,
+          "cycle_serialized_result_tokens": 470,
+          "cycle_serialized_input_plus_result_tokens": 1486,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.6993,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 207,
+              "serialized_input_plus_result_tokens": 1064,
+              "result_text_only_tokens": 181
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.0551,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 102,
+              "serialized_input_plus_result_tokens": 179,
+              "result_text_only_tokens": 79
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.121,
+              "serialized_call_input_tokens": 82,
+              "serialized_call_result_tokens": 161,
+              "serialized_input_plus_result_tokens": 243,
+              "result_text_only_tokens": 135
+            }
+          ]
+        },
+        {
+          "block_index": 7,
+          "cycle_elapsed_ms": 12.4153,
+          "cycle_serialized_input_tokens": 1002,
+          "cycle_serialized_result_tokens": 445,
+          "cycle_serialized_input_plus_result_tokens": 1447,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.0195,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 200,
+              "serialized_input_plus_result_tokens": 1057,
+              "result_text_only_tokens": 174
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.1888,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.207,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 150,
+              "serialized_input_plus_result_tokens": 225,
+              "result_text_only_tokens": 124
+            }
+          ]
+        },
+        {
+          "block_index": 8,
+          "cycle_elapsed_ms": 12.156,
+          "cycle_serialized_input_tokens": 1004,
+          "cycle_serialized_result_tokens": 449,
+          "cycle_serialized_input_plus_result_tokens": 1453,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.9995,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 201,
+              "serialized_input_plus_result_tokens": 1058,
+              "result_text_only_tokens": 175
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.112,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.0445,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 152,
+              "serialized_input_plus_result_tokens": 228,
+              "result_text_only_tokens": 126
+            }
+          ]
+        },
+        {
+          "block_index": 9,
+          "cycle_elapsed_ms": 12.5749,
+          "cycle_serialized_input_tokens": 1006,
+          "cycle_serialized_result_tokens": 454,
+          "cycle_serialized_input_plus_result_tokens": 1460,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.104,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 202,
+              "serialized_input_plus_result_tokens": 1059,
+              "result_text_only_tokens": 176
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.076,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.3949,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 232,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 10,
+          "cycle_elapsed_ms": 13.1579,
+          "cycle_serialized_input_tokens": 1012,
+          "cycle_serialized_result_tokens": 460,
+          "cycle_serialized_input_plus_result_tokens": 1472,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.1465,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 205,
+              "serialized_input_plus_result_tokens": 1062,
+              "result_text_only_tokens": 179
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.4686,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 100,
+              "serialized_input_plus_result_tokens": 175,
+              "result_text_only_tokens": 77
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.5428,
+              "serialized_call_input_tokens": 80,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 235,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 11,
+          "cycle_elapsed_ms": 13.1057,
+          "cycle_serialized_input_tokens": 1004,
+          "cycle_serialized_result_tokens": 451,
+          "cycle_serialized_input_plus_result_tokens": 1455,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.2875,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 201,
+              "serialized_input_plus_result_tokens": 1058,
+              "result_text_only_tokens": 175
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.2873,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.5309,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 12,
+          "cycle_elapsed_ms": 13.1531,
+          "cycle_serialized_input_tokens": 1000,
+          "cycle_serialized_result_tokens": 452,
+          "cycle_serialized_input_plus_result_tokens": 1452,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.1269,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 199,
+              "serialized_input_plus_result_tokens": 1056,
+              "result_text_only_tokens": 173
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.3069,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 94,
+              "serialized_input_plus_result_tokens": 163,
+              "result_text_only_tokens": 71
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.7193,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 159,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 133
+            }
+          ]
+        },
+        {
+          "block_index": 13,
+          "cycle_elapsed_ms": 14.1586,
+          "cycle_serialized_input_tokens": 1004,
+          "cycle_serialized_result_tokens": 447,
+          "cycle_serialized_input_plus_result_tokens": 1451,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.5648,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 201,
+              "serialized_input_plus_result_tokens": 1058,
+              "result_text_only_tokens": 175
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.7122,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.8816,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 150,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 124
+            }
+          ]
+        },
+        {
+          "block_index": 14,
+          "cycle_elapsed_ms": 14.1862,
+          "cycle_serialized_input_tokens": 1008,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 1466,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.6051,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 203,
+              "serialized_input_plus_result_tokens": 1060,
+              "result_text_only_tokens": 177
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.6132,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.9679,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 157,
+              "serialized_input_plus_result_tokens": 235,
+              "result_text_only_tokens": 131
+            }
+          ]
+        },
+        {
+          "block_index": 15,
+          "cycle_elapsed_ms": 14.71,
+          "cycle_serialized_input_tokens": 1004,
+          "cycle_serialized_result_tokens": 450,
+          "cycle_serialized_input_plus_result_tokens": 1454,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.6466,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 201,
+              "serialized_input_plus_result_tokens": 1058,
+              "result_text_only_tokens": 175
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.079,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.9844,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 229,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 16,
+          "cycle_elapsed_ms": 14.6208,
+          "cycle_serialized_input_tokens": 1004,
+          "cycle_serialized_result_tokens": 451,
+          "cycle_serialized_input_plus_result_tokens": 1455,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.6436,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 201,
+              "serialized_input_plus_result_tokens": 1058,
+              "result_text_only_tokens": 175
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.8766,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.1006,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 17,
+          "cycle_elapsed_ms": 15.3883,
+          "cycle_serialized_input_tokens": 998,
+          "cycle_serialized_result_tokens": 439,
+          "cycle_serialized_input_plus_result_tokens": 1437,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.0861,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 198,
+              "serialized_input_plus_result_tokens": 1055,
+              "result_text_only_tokens": 172
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.2454,
+              "serialized_call_input_tokens": 68,
+              "serialized_call_result_tokens": 93,
+              "serialized_input_plus_result_tokens": 161,
+              "result_text_only_tokens": 70
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.0568,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 148,
+              "serialized_input_plus_result_tokens": 221,
+              "result_text_only_tokens": 122
+            }
+          ]
+        },
+        {
+          "block_index": 18,
+          "cycle_elapsed_ms": 15.0535,
+          "cycle_serialized_input_tokens": 1010,
+          "cycle_serialized_result_tokens": 452,
+          "cycle_serialized_input_plus_result_tokens": 1462,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.6931,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 1061,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.0362,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.3242,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 149,
+              "serialized_input_plus_result_tokens": 228,
+              "result_text_only_tokens": 123
+            }
+          ]
+        },
+        {
+          "block_index": 19,
+          "cycle_elapsed_ms": 16.2577,
+          "cycle_serialized_input_tokens": 996,
+          "cycle_serialized_result_tokens": 439,
+          "cycle_serialized_input_plus_result_tokens": 1435,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.1955,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 197,
+              "serialized_input_plus_result_tokens": 1054,
+              "result_text_only_tokens": 171
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.2567,
+              "serialized_call_input_tokens": 67,
+              "serialized_call_result_tokens": 92,
+              "serialized_input_plus_result_tokens": 159,
+              "result_text_only_tokens": 69
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.8055,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 150,
+              "serialized_input_plus_result_tokens": 222,
+              "result_text_only_tokens": 124
+            }
+          ]
+        },
+        {
+          "block_index": 20,
+          "cycle_elapsed_ms": 16.6135,
+          "cycle_serialized_input_tokens": 1006,
+          "cycle_serialized_result_tokens": 454,
+          "cycle_serialized_input_plus_result_tokens": 1460,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.5285,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 202,
+              "serialized_input_plus_result_tokens": 1059,
+              "result_text_only_tokens": 176
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.503,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.582,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 232,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 21,
+          "cycle_elapsed_ms": 16.7769,
+          "cycle_serialized_input_tokens": 998,
+          "cycle_serialized_result_tokens": 444,
+          "cycle_serialized_input_plus_result_tokens": 1442,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 6.0411,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 198,
+              "serialized_input_plus_result_tokens": 1055,
+              "result_text_only_tokens": 172
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.0571,
+              "serialized_call_input_tokens": 68,
+              "serialized_call_result_tokens": 93,
+              "serialized_input_plus_result_tokens": 161,
+              "result_text_only_tokens": 70
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.6787,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 22,
+          "cycle_elapsed_ms": 15.9444,
+          "cycle_serialized_input_tokens": 1006,
+          "cycle_serialized_result_tokens": 451,
+          "cycle_serialized_input_plus_result_tokens": 1457,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.1534,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 202,
+              "serialized_input_plus_result_tokens": 1059,
+              "result_text_only_tokens": 176
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.4019,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.3891,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 152,
+              "serialized_input_plus_result_tokens": 229,
+              "result_text_only_tokens": 126
+            }
+          ]
+        },
+        {
+          "block_index": 23,
+          "cycle_elapsed_ms": 16.2007,
+          "cycle_serialized_input_tokens": 1004,
+          "cycle_serialized_result_tokens": 455,
+          "cycle_serialized_input_plus_result_tokens": 1459,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.2332,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 201,
+              "serialized_input_plus_result_tokens": 1058,
+              "result_text_only_tokens": 175
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.192,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.7755,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 158,
+              "serialized_input_plus_result_tokens": 234,
+              "result_text_only_tokens": 132
+            }
+          ]
+        },
+        {
+          "block_index": 24,
+          "cycle_elapsed_ms": 16.5731,
+          "cycle_serialized_input_tokens": 1008,
+          "cycle_serialized_result_tokens": 460,
+          "cycle_serialized_input_plus_result_tokens": 1468,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.5917,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 203,
+              "serialized_input_plus_result_tokens": 1060,
+              "result_text_only_tokens": 177
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.4306,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.5508,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 159,
+              "serialized_input_plus_result_tokens": 237,
+              "result_text_only_tokens": 133
+            }
+          ]
+        },
+        {
+          "block_index": 25,
+          "cycle_elapsed_ms": 17.4408,
+          "cycle_serialized_input_tokens": 1002,
+          "cycle_serialized_result_tokens": 447,
+          "cycle_serialized_input_plus_result_tokens": 1449,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.2986,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 200,
+              "serialized_input_plus_result_tokens": 1057,
+              "result_text_only_tokens": 174
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.8083,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.3339,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 152,
+              "serialized_input_plus_result_tokens": 227,
+              "result_text_only_tokens": 126
+            }
+          ]
+        },
+        {
+          "block_index": 26,
+          "cycle_elapsed_ms": 17.1642,
+          "cycle_serialized_input_tokens": 1000,
+          "cycle_serialized_result_tokens": 446,
+          "cycle_serialized_input_plus_result_tokens": 1446,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.509,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 199,
+              "serialized_input_plus_result_tokens": 1056,
+              "result_text_only_tokens": 173
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.721,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 94,
+              "serialized_input_plus_result_tokens": 163,
+              "result_text_only_tokens": 71
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.9342,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 227,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 27,
+          "cycle_elapsed_ms": 17.8795,
+          "cycle_serialized_input_tokens": 1008,
+          "cycle_serialized_result_tokens": 456,
+          "cycle_serialized_input_plus_result_tokens": 1464,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.3963,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 203,
+              "serialized_input_plus_result_tokens": 1060,
+              "result_text_only_tokens": 177
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 6.1482,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.335,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 28,
+          "cycle_elapsed_ms": 18.2637,
+          "cycle_serialized_input_tokens": 1008,
+          "cycle_serialized_result_tokens": 459,
+          "cycle_serialized_input_plus_result_tokens": 1467,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.8999,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 203,
+              "serialized_input_plus_result_tokens": 1060,
+              "result_text_only_tokens": 177
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 6.0015,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.3623,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 158,
+              "serialized_input_plus_result_tokens": 236,
+              "result_text_only_tokens": 132
+            }
+          ]
+        },
+        {
+          "block_index": 29,
+          "cycle_elapsed_ms": 18.7351,
+          "cycle_serialized_input_tokens": 1000,
+          "cycle_serialized_result_tokens": 445,
+          "cycle_serialized_input_plus_result_tokens": 1445,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.6907,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 199,
+              "serialized_input_plus_result_tokens": 1056,
+              "result_text_only_tokens": 173
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 6.2256,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 94,
+              "serialized_input_plus_result_tokens": 163,
+              "result_text_only_tokens": 71
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.8188,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 152,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 126
+            }
+          ]
+        },
+        {
+          "block_index": 30,
+          "cycle_elapsed_ms": 19.4895,
+          "cycle_serialized_input_tokens": 1010,
+          "cycle_serialized_result_tokens": 454,
+          "cycle_serialized_input_plus_result_tokens": 1464,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 6.5014,
+              "serialized_call_input_tokens": 857,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 1061,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 6.4218,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.5663,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 151,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 125
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "warm",
+      "scenario": "long",
+      "prompt_tokens": 4000,
+      "prompt_characters": 24374,
+      "blocks": 30,
+      "history_growth": "All measured blocks in this scenario/mode share one initially empty Diary.",
+      "summary": {
+        "cycle_elapsed_ms": {
+          "n": 30,
+          "mean": 18.4841,
+          "median": 18.3271,
+          "p95_nearest_rank": 24.7588,
+          "minimum": 10.9506,
+          "maximum": 26.5687
+        },
+        "cycle_serialized_input_tokens": {
+          "n": 30,
+          "mean": 4205.4667,
+          "median": 4206.0,
+          "p95_nearest_rank": 4212,
+          "minimum": 4198,
+          "maximum": 4214
+        },
+        "cycle_serialized_result_tokens": {
+          "n": 30,
+          "mean": 456.8333,
+          "median": 458.0,
+          "p95_nearest_rank": 467,
+          "minimum": 441,
+          "maximum": 468
+        },
+        "cycle_serialized_input_plus_result_tokens": {
+          "n": 30,
+          "mean": 4662.3,
+          "median": 4662.5,
+          "p95_nearest_rank": 4677,
+          "minimum": 4639,
+          "maximum": 4682
+        }
+      },
+      "operation_latency_ms": {
+        "diary_start": {
+          "n": 30,
+          "mean": 5.9124,
+          "median": 5.7626,
+          "p95_nearest_rank": 8.5302,
+          "minimum": 3.5526,
+          "maximum": 8.6528
+        },
+        "diary_progress_append": {
+          "n": 30,
+          "mean": 6.029,
+          "median": 5.9347,
+          "p95_nearest_rank": 8.3467,
+          "minimum": 3.4547,
+          "maximum": 8.7925
+        },
+        "diary_set_status": {
+          "n": 30,
+          "mean": 6.5427,
+          "median": 6.6302,
+          "p95_nearest_rank": 9.1234,
+          "minimum": 3.4544,
+          "maximum": 10.1329
+        }
+      },
+      "samples": [
+        {
+          "block_index": 1,
+          "cycle_elapsed_ms": 11.544,
+          "cycle_serialized_input_tokens": 4206,
+          "cycle_serialized_result_tokens": 464,
+          "cycle_serialized_input_plus_result_tokens": 4670,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.5736,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 206,
+              "serialized_input_plus_result_tokens": 4263,
+              "result_text_only_tokens": 180
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.516,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.4544,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 161,
+              "serialized_input_plus_result_tokens": 238,
+              "result_text_only_tokens": 135
+            }
+          ]
+        },
+        {
+          "block_index": 2,
+          "cycle_elapsed_ms": 10.9506,
+          "cycle_serialized_input_tokens": 4208,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 4666,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 3.5526,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 207,
+              "serialized_input_plus_result_tokens": 4264,
+              "result_text_only_tokens": 181
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.69,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 3.708,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 231,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 3,
+          "cycle_elapsed_ms": 11.5745,
+          "cycle_serialized_input_tokens": 4202,
+          "cycle_serialized_result_tokens": 455,
+          "cycle_serialized_input_plus_result_tokens": 4657,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.0202,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 4261,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.4547,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.0996,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 156,
+              "serialized_input_plus_result_tokens": 231,
+              "result_text_only_tokens": 130
+            }
+          ]
+        },
+        {
+          "block_index": 4,
+          "cycle_elapsed_ms": 12.6531,
+          "cycle_serialized_input_tokens": 4202,
+          "cycle_serialized_result_tokens": 453,
+          "cycle_serialized_input_plus_result_tokens": 4655,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.398,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 4261,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.9411,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.314,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 229,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 5,
+          "cycle_elapsed_ms": 12.6533,
+          "cycle_serialized_input_tokens": 4198,
+          "cycle_serialized_result_tokens": 450,
+          "cycle_serialized_input_plus_result_tokens": 4648,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.5,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 202,
+              "serialized_input_plus_result_tokens": 4259,
+              "result_text_only_tokens": 176
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 3.8328,
+              "serialized_call_input_tokens": 68,
+              "serialized_call_result_tokens": 93,
+              "serialized_input_plus_result_tokens": 161,
+              "result_text_only_tokens": 70
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.3205,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 228,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 6,
+          "cycle_elapsed_ms": 14.4269,
+          "cycle_serialized_input_tokens": 4206,
+          "cycle_serialized_result_tokens": 461,
+          "cycle_serialized_input_plus_result_tokens": 4667,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.4408,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 206,
+              "serialized_input_plus_result_tokens": 4263,
+              "result_text_only_tokens": 180
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.8751,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.111,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 158,
+              "serialized_input_plus_result_tokens": 235,
+              "result_text_only_tokens": 132
+            }
+          ]
+        },
+        {
+          "block_index": 7,
+          "cycle_elapsed_ms": 14.5975,
+          "cycle_serialized_input_tokens": 4202,
+          "cycle_serialized_result_tokens": 451,
+          "cycle_serialized_input_plus_result_tokens": 4653,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.9453,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 4261,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.6494,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.0028,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 152,
+              "serialized_input_plus_result_tokens": 227,
+              "result_text_only_tokens": 126
+            }
+          ]
+        },
+        {
+          "block_index": 8,
+          "cycle_elapsed_ms": 14.7966,
+          "cycle_serialized_input_tokens": 4198,
+          "cycle_serialized_result_tokens": 448,
+          "cycle_serialized_input_plus_result_tokens": 4646,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.0453,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 202,
+              "serialized_input_plus_result_tokens": 4259,
+              "result_text_only_tokens": 176
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.8168,
+              "serialized_call_input_tokens": 68,
+              "serialized_call_result_tokens": 93,
+              "serialized_input_plus_result_tokens": 161,
+              "result_text_only_tokens": 70
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.9345,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 9,
+          "cycle_elapsed_ms": 14.5582,
+          "cycle_serialized_input_tokens": 4204,
+          "cycle_serialized_result_tokens": 451,
+          "cycle_serialized_input_plus_result_tokens": 4655,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.6045,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 205,
+              "serialized_input_plus_result_tokens": 4262,
+              "result_text_only_tokens": 179
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.0413,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 4.9124,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 150,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 124
+            }
+          ]
+        },
+        {
+          "block_index": 10,
+          "cycle_elapsed_ms": 14.8448,
+          "cycle_serialized_input_tokens": 4206,
+          "cycle_serialized_result_tokens": 456,
+          "cycle_serialized_input_plus_result_tokens": 4662,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 4.6575,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 206,
+              "serialized_input_plus_result_tokens": 4263,
+              "result_text_only_tokens": 180
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.8708,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.3165,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 11,
+          "cycle_elapsed_ms": 16.0087,
+          "cycle_serialized_input_tokens": 4210,
+          "cycle_serialized_result_tokens": 460,
+          "cycle_serialized_input_plus_result_tokens": 4670,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.0888,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 208,
+              "serialized_input_plus_result_tokens": 4265,
+              "result_text_only_tokens": 182
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 4.843,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.0769,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 232,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 12,
+          "cycle_elapsed_ms": 16.8861,
+          "cycle_serialized_input_tokens": 4208,
+          "cycle_serialized_result_tokens": 462,
+          "cycle_serialized_input_plus_result_tokens": 4670,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.4431,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 207,
+              "serialized_input_plus_result_tokens": 4264,
+              "result_text_only_tokens": 181
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.7895,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.6535,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 157,
+              "serialized_input_plus_result_tokens": 235,
+              "result_text_only_tokens": 131
+            }
+          ]
+        },
+        {
+          "block_index": 13,
+          "cycle_elapsed_ms": 17.3051,
+          "cycle_serialized_input_tokens": 4198,
+          "cycle_serialized_result_tokens": 441,
+          "cycle_serialized_input_plus_result_tokens": 4639,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.6485,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 202,
+              "serialized_input_plus_result_tokens": 4259,
+              "result_text_only_tokens": 176
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.5241,
+              "serialized_call_input_tokens": 68,
+              "serialized_call_result_tokens": 93,
+              "serialized_input_plus_result_tokens": 161,
+              "result_text_only_tokens": 70
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.1325,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 146,
+              "serialized_input_plus_result_tokens": 219,
+              "result_text_only_tokens": 120
+            }
+          ]
+        },
+        {
+          "block_index": 14,
+          "cycle_elapsed_ms": 17.1033,
+          "cycle_serialized_input_tokens": 4214,
+          "cycle_serialized_result_tokens": 468,
+          "cycle_serialized_input_plus_result_tokens": 4682,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.506,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 210,
+              "serialized_input_plus_result_tokens": 4267,
+              "result_text_only_tokens": 184
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.8667,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 101,
+              "serialized_input_plus_result_tokens": 177,
+              "result_text_only_tokens": 78
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 5.7306,
+              "serialized_call_input_tokens": 81,
+              "serialized_call_result_tokens": 157,
+              "serialized_input_plus_result_tokens": 238,
+              "result_text_only_tokens": 131
+            }
+          ]
+        },
+        {
+          "block_index": 15,
+          "cycle_elapsed_ms": 18.3534,
+          "cycle_serialized_input_tokens": 4208,
+          "cycle_serialized_result_tokens": 463,
+          "cycle_serialized_input_plus_result_tokens": 4671,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.8451,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 207,
+              "serialized_input_plus_result_tokens": 4264,
+              "result_text_only_tokens": 181
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 5.8661,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.6422,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 158,
+              "serialized_input_plus_result_tokens": 236,
+              "result_text_only_tokens": 132
+            }
+          ]
+        },
+        {
+          "block_index": 16,
+          "cycle_elapsed_ms": 18.3008,
+          "cycle_serialized_input_tokens": 4210,
+          "cycle_serialized_result_tokens": 463,
+          "cycle_serialized_input_plus_result_tokens": 4673,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.68,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 208,
+              "serialized_input_plus_result_tokens": 4265,
+              "result_text_only_tokens": 182
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 6.0027,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.6181,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 156,
+              "serialized_input_plus_result_tokens": 235,
+              "result_text_only_tokens": 130
+            }
+          ]
+        },
+        {
+          "block_index": 17,
+          "cycle_elapsed_ms": 20.6214,
+          "cycle_serialized_input_tokens": 4210,
+          "cycle_serialized_result_tokens": 467,
+          "cycle_serialized_input_plus_result_tokens": 4677,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 6.473,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 208,
+              "serialized_input_plus_result_tokens": 4265,
+              "result_text_only_tokens": 182
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 6.8163,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 173,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 7.3321,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 160,
+              "serialized_input_plus_result_tokens": 239,
+              "result_text_only_tokens": 134
+            }
+          ]
+        },
+        {
+          "block_index": 18,
+          "cycle_elapsed_ms": 19.7485,
+          "cycle_serialized_input_tokens": 4208,
+          "cycle_serialized_result_tokens": 460,
+          "cycle_serialized_input_plus_result_tokens": 4668,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 5.9265,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 207,
+              "serialized_input_plus_result_tokens": 4264,
+              "result_text_only_tokens": 181
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 6.8645,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 6.9575,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 19,
+          "cycle_elapsed_ms": 20.2048,
+          "cycle_serialized_input_tokens": 4204,
+          "cycle_serialized_result_tokens": 457,
+          "cycle_serialized_input_plus_result_tokens": 4661,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 6.1482,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 205,
+              "serialized_input_plus_result_tokens": 4262,
+              "result_text_only_tokens": 179
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 6.591,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 7.4656,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 156,
+              "serialized_input_plus_result_tokens": 232,
+              "result_text_only_tokens": 130
+            }
+          ]
+        },
+        {
+          "block_index": 20,
+          "cycle_elapsed_ms": 24.4759,
+          "cycle_serialized_input_tokens": 4204,
+          "cycle_serialized_result_tokens": 459,
+          "cycle_serialized_input_plus_result_tokens": 4663,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 6.6473,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 205,
+              "serialized_input_plus_result_tokens": 4262,
+              "result_text_only_tokens": 179
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 7.6957,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 10.1329,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 158,
+              "serialized_input_plus_result_tokens": 234,
+              "result_text_only_tokens": 132
+            }
+          ]
+        },
+        {
+          "block_index": 21,
+          "cycle_elapsed_ms": 23.3984,
+          "cycle_serialized_input_tokens": 4208,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 4666,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 8.5302,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 207,
+              "serialized_input_plus_result_tokens": 4264,
+              "result_text_only_tokens": 181
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 7.1814,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 171,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 7.6868,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 231,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 22,
+          "cycle_elapsed_ms": 21.7398,
+          "cycle_serialized_input_tokens": 4202,
+          "cycle_serialized_result_tokens": 450,
+          "cycle_serialized_input_plus_result_tokens": 4652,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 6.8297,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 4261,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 7.2907,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 165,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 7.6194,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 151,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 125
+            }
+          ]
+        },
+        {
+          "block_index": 23,
+          "cycle_elapsed_ms": 20.629,
+          "cycle_serialized_input_tokens": 4206,
+          "cycle_serialized_result_tokens": 452,
+          "cycle_serialized_input_plus_result_tokens": 4658,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 6.348,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 206,
+              "serialized_input_plus_result_tokens": 4263,
+              "result_text_only_tokens": 180
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 6.7913,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 7.4897,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 149,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 123
+            }
+          ]
+        },
+        {
+          "block_index": 24,
+          "cycle_elapsed_ms": 21.3986,
+          "cycle_serialized_input_tokens": 4204,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 4662,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 6.8613,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 205,
+              "serialized_input_plus_result_tokens": 4262,
+              "result_text_only_tokens": 179
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 7.0711,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 7.4662,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 157,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 131
+            }
+          ]
+        },
+        {
+          "block_index": 25,
+          "cycle_elapsed_ms": 21.8729,
+          "cycle_serialized_input_tokens": 4200,
+          "cycle_serialized_result_tokens": 450,
+          "cycle_serialized_input_plus_result_tokens": 4650,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 6.8125,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 203,
+              "serialized_input_plus_result_tokens": 4260,
+              "result_text_only_tokens": 177
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 7.0776,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 94,
+              "serialized_input_plus_result_tokens": 163,
+              "result_text_only_tokens": 71
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 7.9828,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 227,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 26,
+          "cycle_elapsed_ms": 24.4472,
+          "cycle_serialized_input_tokens": 4204,
+          "cycle_serialized_result_tokens": 451,
+          "cycle_serialized_input_plus_result_tokens": 4655,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 8.0122,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 205,
+              "serialized_input_plus_result_tokens": 4262,
+              "result_text_only_tokens": 179
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 7.7,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 8.735,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 150,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 124
+            }
+          ]
+        },
+        {
+          "block_index": 27,
+          "cycle_elapsed_ms": 23.5537,
+          "cycle_serialized_input_tokens": 4204,
+          "cycle_serialized_result_tokens": 454,
+          "cycle_serialized_input_plus_result_tokens": 4658,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 7.1708,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 205,
+              "serialized_input_plus_result_tokens": 4262,
+              "result_text_only_tokens": 179
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 7.9358,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 167,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 8.4471,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 229,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 28,
+          "cycle_elapsed_ms": 24.5498,
+          "cycle_serialized_input_tokens": 4212,
+          "cycle_serialized_result_tokens": 463,
+          "cycle_serialized_input_plus_result_tokens": 4675,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 7.4141,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 4266,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 8.3467,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 100,
+              "serialized_input_plus_result_tokens": 175,
+              "result_text_only_tokens": 77
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 8.789,
+              "serialized_call_input_tokens": 80,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 234,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 29,
+          "cycle_elapsed_ms": 24.7588,
+          "cycle_serialized_input_tokens": 4206,
+          "cycle_serialized_result_tokens": 459,
+          "cycle_serialized_input_plus_result_tokens": 4665,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 7.5957,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 206,
+              "serialized_input_plus_result_tokens": 4263,
+              "result_text_only_tokens": 180
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 8.1366,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 169,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 9.0265,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 156,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 130
+            }
+          ]
+        },
+        {
+          "block_index": 30,
+          "cycle_elapsed_ms": 26.5687,
+          "cycle_serialized_input_tokens": 4212,
+          "cycle_serialized_result_tokens": 463,
+          "cycle_serialized_input_plus_result_tokens": 4675,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 8.6528,
+              "serialized_call_input_tokens": 4057,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 4266,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 8.7925,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 100,
+              "serialized_input_plus_result_tokens": 175,
+              "result_text_only_tokens": 77
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 9.1234,
+              "serialized_call_input_tokens": 80,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 234,
+              "result_text_only_tokens": 128
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "fresh_bridge",
+      "scenario": "short",
+      "prompt_tokens": 80,
+      "prompt_characters": 485,
+      "blocks": 10,
+      "history_growth": "All measured blocks in this scenario/mode share one initially empty Diary.",
+      "summary": {
+        "cycle_elapsed_ms": {
+          "n": 10,
+          "mean": 1704.1984,
+          "median": 1701.8029,
+          "p95_nearest_rank": 1738.4566,
+          "minimum": 1681.8173,
+          "maximum": 1738.4566
+        },
+        "cycle_serialized_input_tokens": {
+          "n": 10,
+          "mean": 290.4,
+          "median": 291.0,
+          "p95_nearest_rank": 296,
+          "minimum": 282,
+          "maximum": 296
+        },
+        "cycle_serialized_result_tokens": {
+          "n": 10,
+          "mean": 461.7,
+          "median": 462.0,
+          "p95_nearest_rank": 473,
+          "minimum": 450,
+          "maximum": 473
+        },
+        "cycle_serialized_input_plus_result_tokens": {
+          "n": 10,
+          "mean": 752.1,
+          "median": 753.0,
+          "p95_nearest_rank": 767,
+          "minimum": 732,
+          "maximum": 767
+        }
+      },
+      "operation_latency_ms": {
+        "diary_start": {
+          "n": 10,
+          "mean": 567.7145,
+          "median": 567.6657,
+          "p95_nearest_rank": 578.9439,
+          "minimum": 553.552,
+          "maximum": 578.9439
+        },
+        "diary_progress_append": {
+          "n": 10,
+          "mean": 567.9573,
+          "median": 565.0842,
+          "p95_nearest_rank": 582.8972,
+          "minimum": 557.6068,
+          "maximum": 582.8972
+        },
+        "diary_set_status": {
+          "n": 10,
+          "mean": 568.5266,
+          "median": 566.5886,
+          "p95_nearest_rank": 580.1086,
+          "minimum": 560.8593,
+          "maximum": 580.1086
+        }
+      },
+      "samples": [
+        {
+          "block_index": 1,
+          "cycle_elapsed_ms": 1738.4566,
+          "cycle_serialized_input_tokens": 286,
+          "cycle_serialized_result_tokens": 455,
+          "cycle_serialized_input_plus_result_tokens": 741,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 575.4508,
+              "serialized_call_input_tokens": 139,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 348,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 582.8972,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 166,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 580.1086,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 151,
+              "serialized_input_plus_result_tokens": 227,
+              "result_text_only_tokens": 125
+            }
+          ]
+        },
+        {
+          "block_index": 2,
+          "cycle_elapsed_ms": 1681.8173,
+          "cycle_serialized_input_tokens": 286,
+          "cycle_serialized_result_tokens": 451,
+          "cycle_serialized_input_plus_result_tokens": 737,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 563.3345,
+              "serialized_call_input_tokens": 139,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 348,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 557.6068,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 166,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 560.876,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 147,
+              "serialized_input_plus_result_tokens": 223,
+              "result_text_only_tokens": 121
+            }
+          ]
+        },
+        {
+          "block_index": 3,
+          "cycle_elapsed_ms": 1697.1345,
+          "cycle_serialized_input_tokens": 292,
+          "cycle_serialized_result_tokens": 464,
+          "cycle_serialized_input_plus_result_tokens": 756,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 553.552,
+              "serialized_call_input_tokens": 139,
+              "serialized_call_result_tokens": 212,
+              "serialized_input_plus_result_tokens": 351,
+              "result_text_only_tokens": 186
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 565.1222,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 98,
+              "serialized_input_plus_result_tokens": 172,
+              "result_text_only_tokens": 75
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 578.4603,
+              "serialized_call_input_tokens": 79,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 4,
+          "cycle_elapsed_ms": 1702.7566,
+          "cycle_serialized_input_tokens": 286,
+          "cycle_serialized_result_tokens": 456,
+          "cycle_serialized_input_plus_result_tokens": 742,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 576.8512,
+              "serialized_call_input_tokens": 139,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 348,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 565.0461,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 166,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 560.8593,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 152,
+              "serialized_input_plus_result_tokens": 228,
+              "result_text_only_tokens": 126
+            }
+          ]
+        },
+        {
+          "block_index": 5,
+          "cycle_elapsed_ms": 1686.1702,
+          "cycle_serialized_input_tokens": 290,
+          "cycle_serialized_result_tokens": 460,
+          "cycle_serialized_input_plus_result_tokens": 750,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 564.8527,
+              "serialized_call_input_tokens": 139,
+              "serialized_call_result_tokens": 211,
+              "serialized_input_plus_result_tokens": 350,
+              "result_text_only_tokens": 185
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 557.8113,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 170,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 563.5062,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 152,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 126
+            }
+          ]
+        },
+        {
+          "block_index": 6,
+          "cycle_elapsed_ms": 1725.7583,
+          "cycle_serialized_input_tokens": 296,
+          "cycle_serialized_result_tokens": 468,
+          "cycle_serialized_input_plus_result_tokens": 764,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 578.9439,
+              "serialized_call_input_tokens": 139,
+              "serialized_call_result_tokens": 214,
+              "serialized_input_plus_result_tokens": 353,
+              "result_text_only_tokens": 188
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 581.3849,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 100,
+              "serialized_input_plus_result_tokens": 176,
+              "result_text_only_tokens": 77
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 565.4295,
+              "serialized_call_input_tokens": 81,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 235,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 7,
+          "cycle_elapsed_ms": 1689.6899,
+          "cycle_serialized_input_tokens": 296,
+          "cycle_serialized_result_tokens": 471,
+          "cycle_serialized_input_plus_result_tokens": 767,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 553.6008,
+              "serialized_call_input_tokens": 139,
+              "serialized_call_result_tokens": 214,
+              "serialized_input_plus_result_tokens": 353,
+              "result_text_only_tokens": 188
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 563.6382,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 100,
+              "serialized_input_plus_result_tokens": 176,
+              "result_text_only_tokens": 77
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 572.4509,
+              "serialized_call_input_tokens": 81,
+              "serialized_call_result_tokens": 157,
+              "serialized_input_plus_result_tokens": 238,
+              "result_text_only_tokens": 131
+            }
+          ]
+        },
+        {
+          "block_index": 8,
+          "cycle_elapsed_ms": 1700.8492,
+          "cycle_serialized_input_tokens": 294,
+          "cycle_serialized_result_tokens": 473,
+          "cycle_serialized_input_plus_result_tokens": 767,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 566.3636,
+              "serialized_call_input_tokens": 139,
+              "serialized_call_result_tokens": 213,
+              "serialized_input_plus_result_tokens": 352,
+              "result_text_only_tokens": 187
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 563.4482,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 174,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 571.0374,
+              "serialized_call_input_tokens": 80,
+              "serialized_call_result_tokens": 161,
+              "serialized_input_plus_result_tokens": 241,
+              "result_text_only_tokens": 135
+            }
+          ]
+        },
+        {
+          "block_index": 9,
+          "cycle_elapsed_ms": 1714.3186,
+          "cycle_serialized_input_tokens": 282,
+          "cycle_serialized_result_tokens": 450,
+          "cycle_serialized_input_plus_result_tokens": 732,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 575.2277,
+              "serialized_call_input_tokens": 139,
+              "serialized_call_result_tokens": 207,
+              "serialized_input_plus_result_tokens": 346,
+              "result_text_only_tokens": 181
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 574.3008,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 93,
+              "serialized_input_plus_result_tokens": 162,
+              "result_text_only_tokens": 70
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 564.7901,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 150,
+              "serialized_input_plus_result_tokens": 224,
+              "result_text_only_tokens": 124
+            }
+          ]
+        },
+        {
+          "block_index": 10,
+          "cycle_elapsed_ms": 1705.033,
+          "cycle_serialized_input_tokens": 296,
+          "cycle_serialized_result_tokens": 469,
+          "cycle_serialized_input_plus_result_tokens": 765,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 568.9678,
+              "serialized_call_input_tokens": 139,
+              "serialized_call_result_tokens": 214,
+              "serialized_input_plus_result_tokens": 353,
+              "result_text_only_tokens": 188
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 568.3174,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 100,
+              "serialized_input_plus_result_tokens": 176,
+              "result_text_only_tokens": 77
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 567.7478,
+              "serialized_call_input_tokens": 81,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 236,
+              "result_text_only_tokens": 129
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "fresh_bridge",
+      "scenario": "medium",
+      "prompt_tokens": 800,
+      "prompt_characters": 4874,
+      "blocks": 10,
+      "history_growth": "All measured blocks in this scenario/mode share one initially empty Diary.",
+      "summary": {
+        "cycle_elapsed_ms": {
+          "n": 10,
+          "mean": 1709.5736,
+          "median": 1703.4492,
+          "p95_nearest_rank": 1737.5049,
+          "minimum": 1690.3473,
+          "maximum": 1737.5049
+        },
+        "cycle_serialized_input_tokens": {
+          "n": 10,
+          "mean": 1006.4,
+          "median": 1007.0,
+          "p95_nearest_rank": 1013,
+          "minimum": 1001,
+          "maximum": 1013
+        },
+        "cycle_serialized_result_tokens": {
+          "n": 10,
+          "mean": 451.1,
+          "median": 452.0,
+          "p95_nearest_rank": 465,
+          "minimum": 437,
+          "maximum": 465
+        },
+        "cycle_serialized_input_plus_result_tokens": {
+          "n": 10,
+          "mean": 1457.5,
+          "median": 1460.0,
+          "p95_nearest_rank": 1478,
+          "minimum": 1438,
+          "maximum": 1478
+        }
+      },
+      "operation_latency_ms": {
+        "diary_start": {
+          "n": 10,
+          "mean": 569.2372,
+          "median": 567.8184,
+          "p95_nearest_rank": 582.2045,
+          "minimum": 562.371,
+          "maximum": 582.2045
+        },
+        "diary_progress_append": {
+          "n": 10,
+          "mean": 571.6168,
+          "median": 572.7509,
+          "p95_nearest_rank": 588.4852,
+          "minimum": 557.3791,
+          "maximum": 588.4852
+        },
+        "diary_set_status": {
+          "n": 10,
+          "mean": 568.7196,
+          "median": 567.4967,
+          "p95_nearest_rank": 577.5128,
+          "minimum": 561.6895,
+          "maximum": 577.5128
+        }
+      },
+      "samples": [
+        {
+          "block_index": 1,
+          "cycle_elapsed_ms": 1698.0759,
+          "cycle_serialized_input_tokens": 1009,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 1467,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 571.0807,
+              "serialized_call_input_tokens": 858,
+              "serialized_call_result_tokens": 203,
+              "serialized_input_plus_result_tokens": 1061,
+              "result_text_only_tokens": 177
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 565.2498,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 170,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 561.7454,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 158,
+              "serialized_input_plus_result_tokens": 236,
+              "result_text_only_tokens": 132
+            }
+          ]
+        },
+        {
+          "block_index": 2,
+          "cycle_elapsed_ms": 1702.7232,
+          "cycle_serialized_input_tokens": 1009,
+          "cycle_serialized_result_tokens": 453,
+          "cycle_serialized_input_plus_result_tokens": 1462,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 564.0269,
+              "serialized_call_input_tokens": 858,
+              "serialized_call_result_tokens": 203,
+              "serialized_input_plus_result_tokens": 1061,
+              "result_text_only_tokens": 177
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 577.0068,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 170,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 561.6895,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 231,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 3,
+          "cycle_elapsed_ms": 1696.602,
+          "cycle_serialized_input_tokens": 1013,
+          "cycle_serialized_result_tokens": 465,
+          "cycle_serialized_input_plus_result_tokens": 1478,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 570.0142,
+              "serialized_call_input_tokens": 858,
+              "serialized_call_result_tokens": 205,
+              "serialized_input_plus_result_tokens": 1063,
+              "result_text_only_tokens": 179
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 562.4757,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 174,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 564.1121,
+              "serialized_call_input_tokens": 80,
+              "serialized_call_result_tokens": 161,
+              "serialized_input_plus_result_tokens": 241,
+              "result_text_only_tokens": 135
+            }
+          ]
+        },
+        {
+          "block_index": 4,
+          "cycle_elapsed_ms": 1692.4966,
+          "cycle_serialized_input_tokens": 1003,
+          "cycle_serialized_result_tokens": 445,
+          "cycle_serialized_input_plus_result_tokens": 1448,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 562.371,
+              "serialized_call_input_tokens": 858,
+              "serialized_call_result_tokens": 200,
+              "serialized_input_plus_result_tokens": 1058,
+              "result_text_only_tokens": 174
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 562.7875,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 94,
+              "serialized_input_plus_result_tokens": 164,
+              "result_text_only_tokens": 71
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 567.3381,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 151,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 125
+            }
+          ]
+        },
+        {
+          "block_index": 5,
+          "cycle_elapsed_ms": 1704.1752,
+          "cycle_serialized_input_tokens": 1001,
+          "cycle_serialized_result_tokens": 439,
+          "cycle_serialized_input_plus_result_tokens": 1440,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 563.725,
+              "serialized_call_input_tokens": 858,
+              "serialized_call_result_tokens": 199,
+              "serialized_input_plus_result_tokens": 1057,
+              "result_text_only_tokens": 173
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 571.2346,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 93,
+              "serialized_input_plus_result_tokens": 162,
+              "result_text_only_tokens": 70
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 569.2156,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 147,
+              "serialized_input_plus_result_tokens": 221,
+              "result_text_only_tokens": 121
+            }
+          ]
+        },
+        {
+          "block_index": 6,
+          "cycle_elapsed_ms": 1737.5049,
+          "cycle_serialized_input_tokens": 1007,
+          "cycle_serialized_result_tokens": 451,
+          "cycle_serialized_input_plus_result_tokens": 1458,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 582.2045,
+              "serialized_call_input_tokens": 858,
+              "serialized_call_result_tokens": 202,
+              "serialized_input_plus_result_tokens": 1060,
+              "result_text_only_tokens": 176
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 577.7876,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 168,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 577.5128,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 153,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 127
+            }
+          ]
+        },
+        {
+          "block_index": 7,
+          "cycle_elapsed_ms": 1709.1595,
+          "cycle_serialized_input_tokens": 1009,
+          "cycle_serialized_result_tokens": 455,
+          "cycle_serialized_input_plus_result_tokens": 1464,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 567.237,
+              "serialized_call_input_tokens": 858,
+              "serialized_call_result_tokens": 203,
+              "serialized_input_plus_result_tokens": 1061,
+              "result_text_only_tokens": 177
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 574.2673,
+              "serialized_call_input_tokens": 73,
+              "serialized_call_result_tokens": 97,
+              "serialized_input_plus_result_tokens": 170,
+              "result_text_only_tokens": 74
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 567.6552,
+              "serialized_call_input_tokens": 78,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 233,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 8,
+          "cycle_elapsed_ms": 1730.7194,
+          "cycle_serialized_input_tokens": 1005,
+          "cycle_serialized_result_tokens": 450,
+          "cycle_serialized_input_plus_result_tokens": 1455,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 577.2288,
+              "serialized_call_input_tokens": 858,
+              "serialized_call_result_tokens": 201,
+              "serialized_input_plus_result_tokens": 1059,
+              "result_text_only_tokens": 175
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 579.4946,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 166,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 573.996,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 230,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 9,
+          "cycle_elapsed_ms": 1690.3473,
+          "cycle_serialized_input_tokens": 1007,
+          "cycle_serialized_result_tokens": 458,
+          "cycle_serialized_input_plus_result_tokens": 1465,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 566.0841,
+              "serialized_call_input_tokens": 858,
+              "serialized_call_result_tokens": 202,
+              "serialized_input_plus_result_tokens": 1060,
+              "result_text_only_tokens": 176
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 557.3791,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 168,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 566.8841,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 160,
+              "serialized_input_plus_result_tokens": 237,
+              "result_text_only_tokens": 134
+            }
+          ]
+        },
+        {
+          "block_index": 10,
+          "cycle_elapsed_ms": 1733.9321,
+          "cycle_serialized_input_tokens": 1001,
+          "cycle_serialized_result_tokens": 437,
+          "cycle_serialized_input_plus_result_tokens": 1438,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 568.3998,
+              "serialized_call_input_tokens": 858,
+              "serialized_call_result_tokens": 199,
+              "serialized_input_plus_result_tokens": 1057,
+              "result_text_only_tokens": 173
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 588.4852,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 93,
+              "serialized_input_plus_result_tokens": 162,
+              "result_text_only_tokens": 70
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 577.0471,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 145,
+              "serialized_input_plus_result_tokens": 219,
+              "result_text_only_tokens": 119
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "fresh_bridge",
+      "scenario": "long",
+      "prompt_tokens": 4000,
+      "prompt_characters": 24374,
+      "blocks": 10,
+      "history_growth": "All measured blocks in this scenario/mode share one initially empty Diary.",
+      "summary": {
+        "cycle_elapsed_ms": {
+          "n": 10,
+          "mean": 1719.311,
+          "median": 1717.6124,
+          "p95_nearest_rank": 1752.4689,
+          "minimum": 1682.9837,
+          "maximum": 1752.4689
+        },
+        "cycle_serialized_input_tokens": {
+          "n": 10,
+          "mean": 4206.6,
+          "median": 4207.0,
+          "p95_nearest_rank": 4213,
+          "minimum": 4201,
+          "maximum": 4213
+        },
+        "cycle_serialized_result_tokens": {
+          "n": 10,
+          "mean": 454.2,
+          "median": 454.5,
+          "p95_nearest_rank": 463,
+          "minimum": 446,
+          "maximum": 463
+        },
+        "cycle_serialized_input_plus_result_tokens": {
+          "n": 10,
+          "mean": 4660.8,
+          "median": 4661.5,
+          "p95_nearest_rank": 4676,
+          "minimum": 4649,
+          "maximum": 4676
+        }
+      },
+      "operation_latency_ms": {
+        "diary_start": {
+          "n": 10,
+          "mean": 574.7432,
+          "median": 576.7441,
+          "p95_nearest_rank": 588.3377,
+          "minimum": 561.7647,
+          "maximum": 588.3377
+        },
+        "diary_progress_append": {
+          "n": 10,
+          "mean": 572.777,
+          "median": 571.5795,
+          "p95_nearest_rank": 591.1902,
+          "minimum": 556.2409,
+          "maximum": 591.1902
+        },
+        "diary_set_status": {
+          "n": 10,
+          "mean": 571.7908,
+          "median": 570.0957,
+          "p95_nearest_rank": 588.6495,
+          "minimum": 559.2877,
+          "maximum": 588.6495
+        }
+      },
+      "samples": [
+        {
+          "block_index": 1,
+          "cycle_elapsed_ms": 1718.8164,
+          "cycle_serialized_input_tokens": 4201,
+          "cycle_serialized_result_tokens": 448,
+          "cycle_serialized_input_plus_result_tokens": 4649,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 578.5273,
+              "serialized_call_input_tokens": 4058,
+              "serialized_call_result_tokens": 203,
+              "serialized_input_plus_result_tokens": 4261,
+              "result_text_only_tokens": 177
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 573.0386,
+              "serialized_call_input_tokens": 69,
+              "serialized_call_result_tokens": 93,
+              "serialized_input_plus_result_tokens": 162,
+              "result_text_only_tokens": 70
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 567.2505,
+              "serialized_call_input_tokens": 74,
+              "serialized_call_result_tokens": 152,
+              "serialized_input_plus_result_tokens": 226,
+              "result_text_only_tokens": 126
+            }
+          ]
+        },
+        {
+          "block_index": 2,
+          "cycle_elapsed_ms": 1720.5066,
+          "cycle_serialized_input_tokens": 4207,
+          "cycle_serialized_result_tokens": 453,
+          "cycle_serialized_input_plus_result_tokens": 4660,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 564.9767,
+              "serialized_call_input_tokens": 4058,
+              "serialized_call_result_tokens": 206,
+              "serialized_input_plus_result_tokens": 4264,
+              "result_text_only_tokens": 180
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 567.8375,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 168,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 587.6924,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 151,
+              "serialized_input_plus_result_tokens": 228,
+              "result_text_only_tokens": 125
+            }
+          ]
+        },
+        {
+          "block_index": 3,
+          "cycle_elapsed_ms": 1705.0192,
+          "cycle_serialized_input_tokens": 4203,
+          "cycle_serialized_result_tokens": 446,
+          "cycle_serialized_input_plus_result_tokens": 4649,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 580.106,
+              "serialized_call_input_tokens": 4058,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 4262,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 565.5409,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 94,
+              "serialized_input_plus_result_tokens": 164,
+              "result_text_only_tokens": 71
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 559.3723,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 148,
+              "serialized_input_plus_result_tokens": 223,
+              "result_text_only_tokens": 122
+            }
+          ]
+        },
+        {
+          "block_index": 4,
+          "cycle_elapsed_ms": 1737.8577,
+          "cycle_serialized_input_tokens": 4207,
+          "cycle_serialized_result_tokens": 456,
+          "cycle_serialized_input_plus_result_tokens": 4663,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 573.1604,
+              "serialized_call_input_tokens": 4058,
+              "serialized_call_result_tokens": 206,
+              "serialized_input_plus_result_tokens": 4264,
+              "result_text_only_tokens": 180
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 576.0478,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 168,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 588.6495,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 231,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 5,
+          "cycle_elapsed_ms": 1741.6975,
+          "cycle_serialized_input_tokens": 4207,
+          "cycle_serialized_result_tokens": 457,
+          "cycle_serialized_input_plus_result_tokens": 4664,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 578.6696,
+              "serialized_call_input_tokens": 4058,
+              "serialized_call_result_tokens": 206,
+              "serialized_input_plus_result_tokens": 4264,
+              "result_text_only_tokens": 180
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 584.3766,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 168,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 578.6513,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 232,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 6,
+          "cycle_elapsed_ms": 1682.9837,
+          "cycle_serialized_input_tokens": 4213,
+          "cycle_serialized_result_tokens": 463,
+          "cycle_serialized_input_plus_result_tokens": 4676,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 561.7647,
+              "serialized_call_input_tokens": 4058,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 4267,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 556.2409,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 174,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 564.9781,
+              "serialized_call_input_tokens": 80,
+              "serialized_call_result_tokens": 155,
+              "serialized_input_plus_result_tokens": 235,
+              "result_text_only_tokens": 129
+            }
+          ]
+        },
+        {
+          "block_index": 7,
+          "cycle_elapsed_ms": 1752.4689,
+          "cycle_serialized_input_tokens": 4213,
+          "cycle_serialized_result_tokens": 462,
+          "cycle_serialized_input_plus_result_tokens": 4675,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 588.3377,
+              "serialized_call_input_tokens": 4058,
+              "serialized_call_result_tokens": 209,
+              "serialized_input_plus_result_tokens": 4267,
+              "result_text_only_tokens": 183
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 591.1902,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 99,
+              "serialized_input_plus_result_tokens": 174,
+              "result_text_only_tokens": 76
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 572.941,
+              "serialized_call_input_tokens": 80,
+              "serialized_call_result_tokens": 154,
+              "serialized_input_plus_result_tokens": 234,
+              "result_text_only_tokens": 128
+            }
+          ]
+        },
+        {
+          "block_index": 8,
+          "cycle_elapsed_ms": 1709.4556,
+          "cycle_serialized_input_tokens": 4207,
+          "cycle_serialized_result_tokens": 460,
+          "cycle_serialized_input_plus_result_tokens": 4667,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 574.9609,
+              "serialized_call_input_tokens": 4058,
+              "serialized_call_result_tokens": 206,
+              "serialized_input_plus_result_tokens": 4264,
+              "result_text_only_tokens": 180
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 570.1205,
+              "serialized_call_input_tokens": 72,
+              "serialized_call_result_tokens": 96,
+              "serialized_input_plus_result_tokens": 168,
+              "result_text_only_tokens": 73
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 564.3742,
+              "serialized_call_input_tokens": 77,
+              "serialized_call_result_tokens": 158,
+              "serialized_input_plus_result_tokens": 235,
+              "result_text_only_tokens": 132
+            }
+          ]
+        },
+        {
+          "block_index": 9,
+          "cycle_elapsed_ms": 1707.8956,
+          "cycle_serialized_input_tokens": 4203,
+          "cycle_serialized_result_tokens": 446,
+          "cycle_serialized_input_plus_result_tokens": 4649,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 564.2547,
+              "serialized_call_input_tokens": 4058,
+              "serialized_call_result_tokens": 204,
+              "serialized_input_plus_result_tokens": 4262,
+              "result_text_only_tokens": 178
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 568.93,
+              "serialized_call_input_tokens": 70,
+              "serialized_call_result_tokens": 94,
+              "serialized_input_plus_result_tokens": 164,
+              "result_text_only_tokens": 71
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 574.7109,
+              "serialized_call_input_tokens": 75,
+              "serialized_call_result_tokens": 148,
+              "serialized_input_plus_result_tokens": 223,
+              "result_text_only_tokens": 122
+            }
+          ]
+        },
+        {
+          "block_index": 10,
+          "cycle_elapsed_ms": 1716.4084,
+          "cycle_serialized_input_tokens": 4205,
+          "cycle_serialized_result_tokens": 451,
+          "cycle_serialized_input_plus_result_tokens": 4656,
+          "stored_block_verified": true,
+          "operations": [
+            {
+              "operation": "diary_start",
+              "elapsed_ms": 582.6735,
+              "serialized_call_input_tokens": 4058,
+              "serialized_call_result_tokens": 205,
+              "serialized_input_plus_result_tokens": 4263,
+              "result_text_only_tokens": 179
+            },
+            {
+              "operation": "diary_progress_append",
+              "elapsed_ms": 574.4472,
+              "serialized_call_input_tokens": 71,
+              "serialized_call_result_tokens": 95,
+              "serialized_input_plus_result_tokens": 166,
+              "result_text_only_tokens": 72
+            },
+            {
+              "operation": "diary_set_status",
+              "elapsed_ms": 559.2877,
+              "serialized_call_input_tokens": 76,
+              "serialized_call_result_tokens": 151,
+              "serialized_input_plus_result_tokens": 227,
+              "result_text_only_tokens": 125
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

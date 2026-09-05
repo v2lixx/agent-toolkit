@@ -1,0 +1,9 @@
+{
+  "response": "{\"route\":\"ok\"}",
+  "cli_resolved_model": "gpt-5.5",
+  "model_identity_source": "Codex CLI non-JSON model header; not backend response attestation",
+  "wall_seconds": 4.1339,
+  "prompt": "Synthetic route check. No tools or external actions. Return only {\"route\":\"ok\"}.\n(nod)",
+  "raw_diagnostics_exported": false,
+  "provider_usage": null
+}

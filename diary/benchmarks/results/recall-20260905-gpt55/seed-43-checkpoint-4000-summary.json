@@ -1,0 +1,59 @@
+{
+  "response": "{\"requirements\":{\"R001\":\"v-CUvzKfZtv3GfphpB\",\"R002\":\"v-idnZq7m9zdbMD7G5\",\"R003\":\"v-HaKGLi6hJ2apiTnM\",\"R004\":\"v-aEDoDMD6LUT9EjqG\",\"R005\":\"v-75ossuDG7qf3sxXX\",\"R006\":\"v-jtveLJ7F2WD9oTZx\",\"R007\":\"v-MupEmtHVh2xZwdCg\",\"R008\":\"v-cp2FYJsF8txKn4VG\",\"R009\":\"v-vkdeoCKAG35HJyB2\",\"R010\":\"v-592XHwkhSzvf6X7a\",\"R011\":\"v-FwCFwP7ubNunbSpo\",\"R012\":\"v-c4WbYDMkM35NwyDt\",\"R013\":\"v-QVQYN2Pa5aQDfiDG\",\"R014\":\"v-BBk8q7i9i8iHoYSQ\",\"R015\":\"v-JezbKRAGvQHnqcNa\",\"R016\":\"v-dGAMaHXWSkJknKvR\",\"R017\":\"v-NRCFTgvT6s3EgwXK\",\"R018\":\"v-WQAxPgrKUnteVxge\",\"R019\":\"v-Vzymh7mqdxdj5nEP\",\"R020\":\"v-qvrx5KpyBsG49rvF\",\"R021\":\"v-2sQNNq3x4jDSLhfc\",\"R022\":\"v-oM28HEeEfGHBr5Sv\",\"R023\":\"v-3aveWV63PR3fMZVd\",\"R024\":\"v-AjpEsH8dCuENytGm\",\"R025\":\"v-vsoiwwNShajMS69G\",\"R026\":\"v-6yiZJG6dVizSGKnv\",\"R027\":\"v-oyPedr6h5Bj55KeC\",\"R028\":\"v-hg5EUGtxPevFuukd\",\"R029\":\"v-gKMYAFSXCFm6WMBr\",\"R030\":\"v-si5jbQhzARWZGbFJ\",\"R031\":\"v-PRC2bCHGVBEq8it7\",\"R032\":\"v-44tuQSTbpM3LrwWh\",\"R998\":null,\"R999\":null},\"completed_actions\":[\"A001\",\"A002\",\"A003\"],\"next_actions\":[\"P001\",\"P002\"]}",
+  "usage": {
+    "input_tokens": 19245,
+    "cached_input_tokens": 2432,
+    "output_tokens": 616,
+    "reasoning_output_tokens": 51
+  },
+  "event_types": [
+    "thread.started",
+    "turn.started",
+    "item.completed",
+    "item.completed",
+    "turn.completed"
+  ],
+  "cli_diagnostics": [
+    {
+      "kind": "cli_warning",
+      "cli_resolved_model": null
+    }
+  ],
+  "prompt": "Synthetic continuation test. Current task is ORION-43. Use only the supplied memory. Apply the newest correction for this task, ignore unrelated tasks, and never repeat a verified completed action. Return only JSON with requirements (each requested ID mapped to its exact current code or null if unknown), completed_actions (all known completed action IDs), and next_actions (remaining permitted action IDs). Do not guess a missing value. No tools, files, or external actions.\nRequested requirement IDs: [\"R001\",\"R002\",\"R003\",\"R004\",\"R005\",\"R006\",\"R007\",\"R008\",\"R009\",\"R010\",\"R011\",\"R012\",\"R013\",\"R014\",\"R015\",\"R016\",\"R017\",\"R018\",\"R019\",\"R020\",\"R021\",\"R022\",\"R023\",\"R024\",\"R025\",\"R026\",\"R027\",\"R028\",\"R029\",\"R030\",\"R031\",\"R032\",\"R998\",\"R999\"]\n<MEMORY>\nCURRENT TASK: ORION-43\n\nCurrent requirement codes:\n- R001 = `v-CUvzKfZtv3GfphpB`\n- R002 = `v-idnZq7m9zdbMD7G5`\n- R003 = `v-HaKGLi6hJ2apiTnM`\n- R004 = `v-aEDoDMD6LUT9EjqG`\n- R005 = `v-75ossuDG7qf3sxXX`\n- R006 = `v-jtveLJ7F2WD9oTZx`\n- R007 = `v-MupEmtHVh2xZwdCg`\n- R008 = `v-cp2FYJsF8txKn4VG`\n- R009 = `v-vkdeoCKAG35HJyB2`\n- R010 = `v-592XHwkhSzvf6X7a`\n- R011 = `v-FwCFwP7ubNunbSpo`\n- R012 = `v-c4WbYDMkM35NwyDt`\n- R013 = `v-QVQYN2Pa5aQDfiDG`\n- R014 = `v-BBk8q7i9i8iHoYSQ`\n- R015 = `v-JezbKRAGvQHnqcNa`\n- R016 = `v-dGAMaHXWSkJknKvR`\n- R017 = `v-NRCFTgvT6s3EgwXK`\n- R018 = `v-WQAxPgrKUnteVxge`\n- R019 = `v-Vzymh7mqdxdj5nEP`\n- R020 = `v-qvrx5KpyBsG49rvF`\n- R021 = `v-2sQNNq3x4jDSLhfc`\n- R022 = `v-oM28HEeEfGHBr5Sv`\n- R023 = `v-3aveWV63PR3fMZVd`\n- R024 = `v-AjpEsH8dCuENytGm`\n- R025 = `v-vsoiwwNShajMS69G`\n- R026 = `v-6yiZJG6dVizSGKnv`\n- R027 = `v-oyPedr6h5Bj55KeC`\n- R028 = `v-hg5EUGtxPevFuukd`\n- R029 = `v-gKMYAFSXCFm6WMBr`\n- R030 = `v-si5jbQhzARWZGbFJ`\n- R031 = `v-PRC2bCHGVBEq8it7`\n- R032 = `v-44tuQSTbpM3LrwWh`\n\nLatest corrections applied:\n- R027 replaced obsolete `v-jbDanerfmgksGAuw` with `v-oyPedr6h5Bj55KeC`\n- R022 replaced obsolete `v-VEXfevThJH4WYXZG` with `v-oM28HEeEfGHBr5Sv`\n- R030 replaced obsolete `v-YPW7HcfDArvFQGNq` with `v-si5jbQhzARWZGbFJ`\n- R024 replaced obsolete `v-R6oUjrDMV9J3KPJM` with `v-AjpEsH8dCuENytGm`\n\nVerified completed actions, do not repeat:\n- A001 completed successfully; reuse verified result.\n- A002 completed successfully; reuse verified result.\n- A003 completed successfully; reuse verified result.\n\nRemaining permitted next actions:\n- P001: review the next incoming event batch. Not completed.\n- P002: prepare the final handoff when requested. Not completed.\n\nDiscarded as unrelated:\n- All DRACO-43, LYRA-43, and VEGA-43 observations in the event batch. They do not revise ORION-43.\n</MEMORY>\n(nod)",
+  "model": "gpt-5.5",
+  "requested_model": "gpt-5.5",
+  "observed_model": null,
+  "reasoning_effort": "medium",
+  "wall_seconds": 14.0786,
+  "prompt_tokens_estimated": 1058,
+  "response_tokens_estimated": 559,
+  "stderr_present": true,
+  "cached_input_tokens": 2432,
+  "reasoning_tokens": 51,
+  "seed": 43,
+  "checkpoint_tokens": 4000,
+  "arm": "summary",
+  "memory_tokens_estimated": 848,
+  "memory_sha256": "75791aef557225b1a171d85e77b80d664d91c99054477771e8dc5900c7a5ae6b",
+  "metrics": {
+    "invalid_response": false,
+    "requirements_total": 32,
+    "requirement_failures": 0,
+    "requirement_failure_rate": 0.0,
+    "failed_requirement_ids": [],
+    "known_requirement_abstentions": 0,
+    "corrected_requirements_total": 4,
+    "latest_correction_failures": 0,
+    "stale_value_count": 0,
+    "stale_requirement_ids": [],
+    "completed_actions_total": 3,
+    "completed_action_recall_failures": 0,
+    "repeated_completed_actions": 0,
+    "repeated_completed_action_ids": [],
+    "pending_actions_total": 2,
+    "missing_pending_actions": 0,
+    "invalid_next_actions": 0,
+    "unknown_requirements_total": 2,
+    "unknown_requirement_fabrications": 0
+  }
+}

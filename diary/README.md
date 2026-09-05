@@ -8,7 +8,21 @@ It combines an explicit operating protocol, a reusable skill, and a local MCP se
 
 [Set up Diary](SETUP_PROMPT.md) · [Operating skill](mcps/continuity-journal/skills/continuity-journal/SKILL.md) · [Runtime and tests](mcps/continuity-journal/README.md) · [Complete protocol](mcps/continuity-journal/references/CONTINUITY_PROTOCOL.md)
 
-## The problem: a summary is not the work
+## A diary for the agent's future self
+
+Modern LLMs work within a finite context window. Long-running agent hosts may
+periodically compress a growing conversation into a shorter summary so work can
+continue. The model does not automatically retain everything omitted from that
+summary. Compression can preserve the goal while dropping a constraint, a previous
+decision, or the reason an approach was rejected.
+
+Think of Diary as the notebook kept by someone with medium- or long-term amnesia:
+**today's self leaves a reliable account so tomorrow's self does not have to start
+over.** For an agent, the useful record is practical: the exact request, the current
+plan, verified progress, corrections, and the next step. This is a metaphor for
+continuity, not a claim that the framework changes the model's internal memory.
+
+### The problem: a summary is not the work
 
 Long-running agent tasks outlive their original context. A compressed handoff can
 retain the broad objective while losing the details that determine the next correct
@@ -40,14 +54,13 @@ block; an explicitly resumed paused task gets a linked continuation at the botto
 
 ### Six fields that answer the next agent's questions
 
-| Field | Question it answers |
-| --- | --- |
-| Identity and timestamp | Which task and work block is this? |
-| Exact prompt | What did the user actually ask, including corrections? |
-| Ordered plan | What is the current intended execution order? |
-| Progress and checkpoints | What is verified, what remains, and where should work resume? |
-| Journal and lessons | What was misunderstood, and what should not be repeated? |
-| Lifecycle status | Is the work active, complete, cancelled, or explicitly paused? |
+![The six ordered fields in a Diary work block, with the continuation question answered by each.](assets/block-anatomy.svg)
+
+The block number is local to its Diary; the entry ID remains stable while that block
+is edited. A resumed copy receives its own new identity and retains explicit
+`resumes_entry_id` and `resumes_block_number` links to its source. The surrounding
+scope metadata stores task lineage. This separates **work continuation links**
+inside one Diary from **parent–child ownership** between different Diaries.
 
 This is a structured journal, not an immutable event store. New blocks are appended,
 while corrections, plans, and statuses can be atomically updated inside an existing
@@ -88,6 +101,8 @@ A. Missing or ambiguous parents cause an error rather than a guess. The rule has
 no configured nesting-depth limit, although filesystem limits still apply.
 
 ## How a task moves through the framework
+
+![Block lifecycle: start a new block; checkpoint and amend the same block for related corrections; pause the original and append a linked working copy on resume; complete linked sources only when the resumed work completes.](assets/block-lifecycle.svg)
 
 **Start.** Before ordinary task work, one MCP call records the exact prompt, ordered
 plan, timestamp, and working status.
@@ -140,8 +155,67 @@ promise that the agent would remember the correction forever.
 
 These are qualitative dogfooding observations, not a controlled memory benchmark.
 Private journals are not included in this repository. We have not measured a model
-recall percentage, a universal reduction in mistakes, or how frequently agents obey
-the protocol without reminders.
+recall benefit on representative real work, a universal reduction in mistakes, or
+how frequently agents obey the protocol without reminders. A controlled synthetic
+pilot is reported below, including its zero-difference result.
+
+### A maintainer-reported recovery example
+
+During a login-session workflow, an agent had already established a way to reuse
+an authenticated session. After later context compactions, it treated the login
+information as unavailable. The maintainer reports that directing the agent back
+to its Diary restored the previously recorded procedure and allowed the work to
+continue.
+
+This is a **maintainer-provided recollection, not an independently verified case
+study in this release**. The underlying historical record could not be verified
+through the available thread-history reader. No login details, service identifiers,
+or private journal excerpts are published. It illustrates the intended recovery
+pattern; it is not a measured success rate.
+
+### Controlled recall pilot: no advantage measured here
+
+![Side-by-side measured requirement recall failure curves for rolling summary and Diary recovery.](assets/recall-comparison.svg)
+
+Using **GPT-5.5 with medium reasoning effort**, three synthetic histories were
+probed at 4k, 8k, 16k, and 32k history-token checkpoints. Both rolling-summary and
+Diary-recovery continuations passed **672 out of 672 exact requirement checks**.
+Neither arm produced a stale corrected value or proposed repeating a completed
+action. Full-history controls also passed all 240 checks.
+
+The pilot therefore **does not demonstrate a recall advantage for Diary**. Its
+summary budget was sufficient to hold the required facts, and the summary model
+retained them. The full-record Diary arm consumed substantially more recovered
+context. The 672 checks repeat requirements across checkpoints; they are not 672
+independent trials. See the [experiment and limitations](benchmarks/README.md).
+
+### What does recording cost?
+
+![Measured Diary bookkeeping overhead, excluding LLM inference.](assets/mcp-overhead.svg)
+
+A local, synthetic MCP experiment completed **120 blocks and 360 write calls**.
+With a persistent connection, a start → one milestone → complete cycle averaged
+**13.67–18.48 ms** across 80-, 800-, and 4,000-token original prompts. The same
+cycles added approximately **747–4,662 serialized input/output tokens**, estimated
+with `o200k_base` rather than measured as provider billing.
+
+Those figures measure transport and storage, not the model writing the journal,
+reasoning about the task, or recovering after compaction. Longer original prompts
+are copied into the start call, so recording is not free. The schema, skill, and
+protocol also have separate context exposure costs. Omitting Diary adds zero
+**Diary-specific** bookkeeping, not zero total task cost.
+
+Read the [methodology, raw data, and reproducible experiments](benchmarks/README.md)
+before interpreting the chart as a budget or a claim about memory improvement.
+
+![Actual model output tokens and added time for one batched journal-writing stage.](assets/journal-generation.svg)
+
+In a separate nine-call GPT-5.5 experiment, turning supplied completed-work traces
+into journal records and storing them took a mean **6.51–7.31 seconds per block**
+across the three prompt lengths, with **mean 174–192 reported output tokens** per writer
+call. Provider input also included substantial fixed CLI context. This is one
+batched writing stage, not the full cost of an autonomous task or three naturally
+interleaved journaling decisions. No end-to-end break-even claim is made.
 
 ### What the automated tests establish
 

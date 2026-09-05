@@ -1,0 +1,59 @@
+{
+  "response": "{\"requirements\":{\"R001\":\"v-ouXpPsdCNWrZnkEt\",\"R002\":\"v-idnZq7m9zdbMD7G5\",\"R003\":\"v-HaKGLi6hJ2apiTnM\",\"R004\":\"v-MyjhP4DP4FrB66XX\",\"R005\":\"v-75ossuDG7qf3sxXX\",\"R006\":\"v-jtveLJ7F2WD9oTZx\",\"R007\":\"v-YLhM33e6EXpLgVis\",\"R008\":\"v-oDPES8croYrEQE7n\",\"R009\":\"v-cARiXXagCgN8deeD\",\"R010\":\"v-592XHwkhSzvf6X7a\",\"R011\":\"v-FwCFwP7ubNunbSpo\",\"R012\":\"v-EGEanef7d62qdjQ3\",\"R013\":\"v-QVQYN2Pa5aQDfiDG\",\"R014\":\"v-BBk8q7i9i8iHoYSQ\",\"R015\":\"v-JezbKRAGvQHnqcNa\",\"R016\":\"v-dGAMaHXWSkJknKvR\",\"R017\":\"v-nftFs8jtWxyinZF4\",\"R018\":\"v-KZEFtnSx4PjZkUHa\",\"R019\":\"v-Vzymh7mqdxdj5nEP\",\"R020\":\"v-qvrx5KpyBsG49rvF\",\"R021\":\"v-2sQNNq3x4jDSLhfc\",\"R022\":\"v-oM28HEeEfGHBr5Sv\",\"R023\":\"v-iTbLPnzJhmTaXzkp\",\"R024\":\"v-AjpEsH8dCuENytGm\",\"R025\":\"v-yryLzV7aoa2aDR9H\",\"R026\":\"v-kt6EwBs7WubexkCG\",\"R027\":\"v-YxMVqfu2Uz5D9PaW\",\"R028\":\"v-hg5EUGtxPevFuukd\",\"R029\":\"v-gKMYAFSXCFm6WMBr\",\"R030\":\"v-si5jbQhzARWZGbFJ\",\"R031\":\"v-YRykpBkTwosEtsuM\",\"R032\":\"v-44tuQSTbpM3LrwWh\",\"R033\":\"v-TJXxxTVCdRR8mukK\",\"R034\":\"v-zL9a6h9iWG3cDHGV\",\"R035\":\"v-tvh4MSHyyecBSxZt\",\"R036\":\"v-BZecvJY4RtPe3pam\",\"R037\":\"v-7mC6YDdvw6eRfqFR\",\"R038\":\"v-JLsPvox8PgffpW5x\",\"R039\":\"v-SyHuRyPfZhWyfyg5\",\"R040\":\"v-DFhuo27rvpcV9YQU\",\"R041\":\"v-A2EEFKkAft9xaD6p\",\"R042\":\"v-sLkTbGnW88YrSN69\",\"R043\":\"v-QTXuar2wjNKumNs7\",\"R044\":\"v-SLvk8BXCiYwz29YV\",\"R045\":\"v-FFwRdvNgqV7q2Y9K\",\"R046\":\"v-pkRs5xYnAStcY3tD\",\"R047\":\"v-CB6fhmvkifcck4W9\",\"R048\":\"v-bBf5sWuiqLhQUXc6\",\"R049\":\"v-BT6zf4kkHrS42cWS\",\"R050\":\"v-oPdtHUfqUd2aBWwu\",\"R051\":\"v-ZwLRSwzeV7VVShi2\",\"R052\":\"v-UxeWb6bF2LoD6pV3\",\"R053\":\"v-zXcDxe3UHHMXwt4r\",\"R054\":\"v-spRJSy29uM55kJZg\",\"R055\":\"v-tayWoDeUzQ7FiQWa\",\"R056\":\"v-JUGhJJou6LFMMwrY\",\"R057\":\"v-YHiQmHuKSAsvopzk\",\"R058\":\"v-eifEWdSSjVb4csF5\",\"R059\":\"v-NVTsz6a4UF6dHtx6\",\"R060\":\"v-fKiMnAwdGaDRuixu\",\"R061\":\"v-HDxZhhCa7NrGi4CL\",\"R062\":\"v-4UP3WCacmaFjWTbp\",\"R063\":\"v-ooh9fDGn6s979Yxu\",\"R064\":\"v-JrJ8sAAFcVGLXeTN\",\"R065\":\"v-pTTH2cjFiPtAxMsU\",\"R066\":\"v-i7WTM22w2vHJMbAs\",\"R067\":\"v-mG7N3Cxoahegyb42\",\"R068\":\"v-xSttkssKRabFhzLK\",\"R069\":\"v-bFHmTwwY2YspEJoF\",\"R070\":\"v-UU5GY2sSeMXsdvxV\",\"R071\":\"v-Z73xeh376rb9q4BE\",\"R072\":\"v-SML5qptBitsmBUhM\",\"R073\":\"v-RRLTckhetmmrxdm4\",\"R074\":\"v-FtxFoM9keHuUNoiT\",\"R075\":\"v-oZbosCeZgYvqYGp3\",\"R076\":\"v-rucqMjE9f2LkfwLw\",\"R077\":\"v-pYzDMzC9bwv9gE2b\",\"R078\":\"v-nuFDJX8jeHJaQPKL\",\"R079\":\"v-EWadPaUzaGVKAe88\",\"R080\":\"v-vUgeWpBm2YJmGBgt\",\"R998\":null,\"R999\":null},\"completed_actions\":[\"A001\",\"A002\",\"A003\",\"A004\",\"A005\",\"A006\",\"A007\",\"A008\",\"A009\",\"A010\",\"A011\",\"A012\"],\"next_actions\":[\"P001\",\"P002\"]}",
+  "usage": {
+    "input_tokens": 20171,
+    "cached_input_tokens": 17792,
+    "output_tokens": 1418,
+    "reasoning_output_tokens": 51
+  },
+  "event_types": [
+    "thread.started",
+    "turn.started",
+    "item.completed",
+    "item.completed",
+    "turn.completed"
+  ],
+  "cli_diagnostics": [
+    {
+      "kind": "cli_warning",
+      "cli_resolved_model": null
+    }
+  ],
+  "prompt": "Synthetic continuation test. Current task is ORION-43. Use only the supplied memory. Apply the newest correction for this task, ignore unrelated tasks, and never repeat a verified completed action. Return only JSON with requirements (each requested ID mapped to its exact current code or null if unknown), completed_actions (all known completed action IDs), and next_actions (remaining permitted action IDs). Do not guess a missing value. No tools, files, or external actions.\nRequested requirement IDs: [\"R001\",\"R002\",\"R003\",\"R004\",\"R005\",\"R006\",\"R007\",\"R008\",\"R009\",\"R010\",\"R011\",\"R012\",\"R013\",\"R014\",\"R015\",\"R016\",\"R017\",\"R018\",\"R019\",\"R020\",\"R021\",\"R022\",\"R023\",\"R024\",\"R025\",\"R026\",\"R027\",\"R028\",\"R029\",\"R030\",\"R031\",\"R032\",\"R033\",\"R034\",\"R035\",\"R036\",\"R037\",\"R038\",\"R039\",\"R040\",\"R041\",\"R042\",\"R043\",\"R044\",\"R045\",\"R046\",\"R047\",\"R048\",\"R049\",\"R050\",\"R051\",\"R052\",\"R053\",\"R054\",\"R055\",\"R056\",\"R057\",\"R058\",\"R059\",\"R060\",\"R061\",\"R062\",\"R063\",\"R064\",\"R065\",\"R066\",\"R067\",\"R068\",\"R069\",\"R070\",\"R071\",\"R072\",\"R073\",\"R074\",\"R075\",\"R076\",\"R077\",\"R078\",\"R079\",\"R080\",\"R998\",\"R999\"]\n<MEMORY>\nCURRENT TASK: ORION-43\n\nCurrent requirement codes:\nR001=v-ouXpPsdCNWrZnkEt\nR002=v-idnZq7m9zdbMD7G5\nR003=v-HaKGLi6hJ2apiTnM\nR004=v-MyjhP4DP4FrB66XX\nR005=v-75ossuDG7qf3sxXX\nR006=v-jtveLJ7F2WD9oTZx\nR007=v-YLhM33e6EXpLgVis\nR008=v-oDPES8croYrEQE7n\nR009=v-cARiXXagCgN8deeD\nR010=v-592XHwkhSzvf6X7a\nR011=v-FwCFwP7ubNunbSpo\nR012=v-EGEanef7d62qdjQ3\nR013=v-QVQYN2Pa5aQDfiDG\nR014=v-BBk8q7i9i8iHoYSQ\nR015=v-JezbKRAGvQHnqcNa\nR016=v-dGAMaHXWSkJknKvR\nR017=v-nftFs8jtWxyinZF4\nR018=v-KZEFtnSx4PjZkUHa\nR019=v-Vzymh7mqdxdj5nEP\nR020=v-qvrx5KpyBsG49rvF\nR021=v-2sQNNq3x4jDSLhfc\nR022=v-oM28HEeEfGHBr5Sv\nR023=v-iTbLPnzJhmTaXzkp\nR024=v-AjpEsH8dCuENytGm\nR025=v-yryLzV7aoa2aDR9H\nR026=v-kt6EwBs7WubexkCG\nR027=v-YxMVqfu2Uz5D9PaW\nR028=v-hg5EUGtxPevFuukd\nR029=v-gKMYAFSXCFm6WMBr\nR030=v-si5jbQhzARWZGbFJ\nR031=v-YRykpBkTwosEtsuM\nR032=v-44tuQSTbpM3LrwWh\nR033=v-TJXxxTVCdRR8mukK\nR034=v-zL9a6h9iWG3cDHGV\nR035=v-tvh4MSHyyecBSxZt\nR036=v-BZecvJY4RtPe3pam\nR037=v-7mC6YDdvw6eRfqFR\nR038=v-JLsPvox8PgffpW5x\nR039=v-SyHuRyPfZhWyfyg5\nR040=v-DFhuo27rvpcV9YQU\nR041=v-A2EEFKkAft9xaD6p\nR042=v-sLkTbGnW88YrSN69\nR043=v-QTXuar2wjNKumNs7\nR044=v-SLvk8BXCiYwz29YV\nR045=v-FFwRdvNgqV7q2Y9K\nR046=v-pkRs5xYnAStcY3tD\nR047=v-CB6fhmvkifcck4W9\nR048=v-bBf5sWuiqLhQUXc6\nR049=v-BT6zf4kkHrS42cWS\nR050=v-oPdtHUfqUd2aBWwu\nR051=v-ZwLRSwzeV7VVShi2\nR052=v-UxeWb6bF2LoD6pV3\nR053=v-zXcDxe3UHHMXwt4r\nR054=v-spRJSy29uM55kJZg\nR055=v-tayWoDeUzQ7FiQWa\nR056=v-JUGhJJou6LFMMwrY\nR057=v-YHiQmHuKSAsvopzk\nR058=v-eifEWdSSjVb4csF5\nR059=v-NVTsz6a4UF6dHtx6\nR060=v-fKiMnAwdGaDRuixu\nR061=v-HDxZhhCa7NrGi4CL\nR062=v-4UP3WCacmaFjWTbp\nR063=v-ooh9fDGn6s979Yxu\nR064=v-JrJ8sAAFcVGLXeTN\nR065=v-pTTH2cjFiPtAxMsU\nR066=v-i7WTM22w2vHJMbAs\nR067=v-mG7N3Cxoahegyb42\nR068=v-xSttkssKRabFhzLK\nR069=v-bFHmTwwY2YspEJoF\nR070=v-UU5GY2sSeMXsdvxV\nR071=v-Z73xeh376rb9q4BE\nR072=v-SML5qptBitsmBUhM\nR073=v-RRLTckhetmmrxdm4\nR074=v-FtxFoM9keHuUNoiT\nR075=v-oZbosCeZgYvqYGp3\nR076=v-rucqMjE9f2LkfwLw\nR077=v-pYzDMzC9bwv9gE2b\nR078=v-nuFDJX8jeHJaQPKL\nR079=v-EWadPaUzaGVKAe88\nR080=v-vUgeWpBm2YJmGBgt\n\nLatest corrections applied:\n- R012: `v-c4WbYDMkM35NwyDt` -> `v-EGEanef7d62qdjQ3`\n- R026: `v-6yiZJG6dVizSGKnv` -> `v-kt6EwBs7WubexkCG`\n- R031: `v-PRC2bCHGVBEq8it7` -> `v-YRykpBkTwosEtsuM`\n- R037: `v-qjjjhcqSgWESiukg` -> `v-7mC6YDdvw6eRfqFR`\n- R044: `v-MtWycX3DCsBGfW4N` -> `v-SLvk8BXCiYwz29YV`\n- R048: `v-xZxztMM2RUyn6Sea` -> `v-bBf5sWuiqLhQUXc6`\n- R063: `v-Jx8LfK99aft2ZX7V` -> `v-ooh9fDGn6s979Yxu`\n- R077: `v-MeuetCWkthBB84jy` -> `v-pYzDMzC9bwv9gE2b`\n\nVerified completed actions, do not repeat:\nA001, A002, A003, A004, A005, A006, A007, A008, A009, A010, A011, A012 completed successfully; reuse verified results.\n\nRemaining permitted next actions:\n- P001: review the next incoming event batch. Not completed.\n- P002: prepare the final handoff when requested. Not completed.\n\nDiscarded as unrelated:\nAll DRACO-43, LYRA-43, and VEGA-43 observations in the new event batch. They do not revise ORION-43.\n</MEMORY>\n(nod)",
+  "model": "gpt-5.5",
+  "requested_model": "gpt-5.5",
+  "observed_model": null,
+  "reasoning_effort": "medium",
+  "wall_seconds": 29.6,
+  "prompt_tokens_estimated": 1984,
+  "response_tokens_estimated": 1361,
+  "stderr_present": true,
+  "cached_input_tokens": 17792,
+  "reasoning_tokens": 51,
+  "seed": 43,
+  "checkpoint_tokens": 32000,
+  "arm": "summary",
+  "memory_tokens_estimated": 1630,
+  "memory_sha256": "c9923ad265e3ea6198aab08e33010fe61ba953771cf0ae615f3e880198994be6",
+  "metrics": {
+    "invalid_response": false,
+    "requirements_total": 80,
+    "requirement_failures": 0,
+    "requirement_failure_rate": 0.0,
+    "failed_requirement_ids": [],
+    "known_requirement_abstentions": 0,
+    "corrected_requirements_total": 26,
+    "latest_correction_failures": 0,
+    "stale_value_count": 0,
+    "stale_requirement_ids": [],
+    "completed_actions_total": 12,
+    "completed_action_recall_failures": 0,
+    "repeated_completed_actions": 0,
+    "repeated_completed_action_ids": [],
+    "pending_actions_total": 2,
+    "missing_pending_actions": 0,
+    "invalid_next_actions": 0,
+    "unknown_requirements_total": 2,
+    "unknown_requirement_fabrications": 0
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-05T04:50:17.028900+00:00",
+  "model": "gpt-5.5",
+  "requested_model": "gpt-5.5",
+  "model_identity_source": "Successful default-route pilot and Codex CLI model header, then explicitly requested for every experimental call; not backend attestation",
+  "reasoning_effort": "medium",
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "checkpoints_history_tokens": [
+    4000,
+    8000,
+    16000,
+    32000
+  ],
+  "tokenizer": "o200k_base",
+  "summary_target_tokens": 2048,
+  "summary_budget_is_prompt_target_not_forced_truncation": true,
+  "max_planned_calls_excluding_route_pilot": 39,
+  "summary_updates": 12,
+  "paired_continuations": 24,
+  "final_full_history_controls": 3,
+  "oracle_generated_before_model_calls": true,
+  "model_oracle_access": "Oracle values never included in probes; model tools disabled; fresh empty working directory.",
+  "arm_order": "Alternate summary/diary first by seed index plus checkpoint index.",
+  "logging": "Both arms receive the exact same mixed-task raw event batches. Harness-managed MCP writes do not inject answer maps or privileged relevance filtering.",
+  "diary_recovery": "Actual stdio continuity_resume followed by explicitly selected diary_read expansion; includes all retained target events.",
+  "limitations": [
+    "Manual checkpoints, not automatic product context compaction.",
+    "Harness-managed logging of the same mixed-task event batches, not autonomous agent adherence.",
+    "Unequal memory lengths: recovered Diary is not capped at the rolling-summary target.",
+    "Synthetic exact-code recall, not a representative work-quality or real-world retention benchmark.",
+    "Three seeds only; no population-level or statistical significance claim.",
+    "Provider usage includes CLI system context and possible cache effects; tokenizer estimates are not billable usage."
+  ],
+  "datasets": [
+    {
+      "seed": 17,
+      "checkpoint_tokens": 4000,
+      "history_sha256": "06271b6bd9e29a3786a8ad56fa5e29e7de055506b589306ab625efa47757ddad",
+      "target_events_sha256": "22a6b93e44c400ffa23f6d482b5c5baeaf41e47b2ff926f6197ef5e94cd460bc",
+      "oracle_sha256": "d195de6322605aa5ed8332ecee96cad9e7330ba94eb3c2c1c494e46960c848d9",
+      "minimal_complete_answer_tokens_estimated": 567
+    },
+    {
+      "seed": 17,
+      "checkpoint_tokens": 8000,
+      "history_sha256": "5acdda6f63a221859eef395f31a603c959c18a9fe8802a545af0518088c0f1b9",
+      "target_events_sha256": "770246708f509a9c53b0e1a45bb73fced50c57018c1aa1ea0c8cea5e961167e0",
+      "oracle_sha256": "2d053ebd8d1f0a76c50ab9caff7cfe0a0f9fc5235f7a4c2b91a21d9e26004ef3",
+      "minimal_complete_answer_tokens_estimated": 839
+    },
+    {
+      "seed": 17,
+      "checkpoint_tokens": 16000,
+      "history_sha256": "d41ccd09415198c9484d1e8fcb6a3931bcb460156a9ca688fcfa8cfc3ed86a51",
+      "target_events_sha256": "ce69ef62a2f6191f1149ecceb9734140421272f4c7d15076658166490a1d2701",
+      "oracle_sha256": "2aec3c95d29a8a3522d5fb5026edb34f40a621509113a1dcb699410ce376673d",
+      "minimal_complete_answer_tokens_estimated": 1118
+    },
+    {
+      "seed": 17,
+      "checkpoint_tokens": 32000,
+      "history_sha256": "13d644c850048d07963a289a8604453f1df95609fd9322d5bbcc19d9c1eef9ed",
+      "target_events_sha256": "24f82b87d76001d6ac948ea34998e285afb1f0dcfc17f5a5a88b48b08b12a4f6",
+      "oracle_sha256": "f94472dcf09046a842cde4be1b046647b9ba758c6ccca439d19a3f37c5ca2776",
+      "minimal_complete_answer_tokens_estimated": 1399
+    },
+    {
+      "seed": 29,
+      "checkpoint_tokens": 4000,
+      "history_sha256": "43b03897dff61fa556ce8f5761fbaaf78538253b2ce8f487a26534c7ada83498",
+      "target_events_sha256": "1a639d5503c293802c3e542b51bfb59f06ecf0600b4900384c1da1300d28ede3",
+      "oracle_sha256": "0f98cacc33810fe4953caa6bcb0f151b301a46409cb90ff912b27b303b2121e1",
+      "minimal_complete_answer_tokens_estimated": 552
+    },
+    {
+      "seed": 29,
+      "checkpoint_tokens": 8000,
+      "history_sha256": "1254dfd450bd726133cc5c5448f90ff17f9e06998eaf23d653b951c810d4250e",
+      "target_events_sha256": "313d82aef44b353cb9dd66d44190f3b1d2351fb143c86290700bbc602a4eaf6c",
+      "oracle_sha256": "09553c163e03d133a0a574f4ed6a075977478b3a8da88f4bbeefaa5e5ce59ea5",
+      "minimal_complete_answer_tokens_estimated": 811
+    },
+    {
+      "seed": 29,
+      "checkpoint_tokens": 16000,
+      "history_sha256": "2df81f73c6850424887b60be60b74b4e0b58b6a19982eb30af5113ef59327268",
+      "target_events_sha256": "ba1466bd8b4c2f03e2d46de5041a4e2ebb1c1dcb730f6e583bde90bd095940ae",
+      "oracle_sha256": "a4121faf3cdb70de3859932b63c7c0eb47746de85d86c13e1ed64df8804cae27",
+      "minimal_complete_answer_tokens_estimated": 1081
+    },
+    {
+      "seed": 29,
+      "checkpoint_tokens": 32000,
+      "history_sha256": "6ce13587f5271ac29917ce2dd805a8ac08d9914238e4abba7919e943bc990ad7",
+      "target_events_sha256": "00b7b052f3dfb23ec10ed2260c98ebef92e4f6e18a490f8ed1f4c835f5db5a3c",
+      "oracle_sha256": "dec4c698c5d2100ce6508ab118fd8fd4f57f6ad877fa4bdbab1805be6a7b5146",
+      "minimal_complete_answer_tokens_estimated": 1358
+    },
+    {
+      "seed": 43,
+      "checkpoint_tokens": 4000,
+      "history_sha256": "0bd20f5209e1ff40464c7f8b3c247d8ab74eb1da8ba33bf2c05e23945afc5405",
+      "target_events_sha256": "c12a20f45068587d8882e8d5b6631cfbe04ffdeade6f873774674f91a4be2e4e",
+      "oracle_sha256": "1c0ea3b40d2160cc2e09030ecf057582f04e593e5bb7ec72d247dc89ffacd10a",
+      "minimal_complete_answer_tokens_estimated": 559
+    },
+    {
+      "seed": 43,
+      "checkpoint_tokens": 8000,
+      "history_sha256": "bf54ba386f2b73e32e2ee71e25c7eb251edd788490532a48effcad6b2a6c0f24",
+      "target_events_sha256": "e38efcea2b6d9e00a6dba1406d235e24d839e893e290679fb8628c94151a520f",
+      "oracle_sha256": "12c683ebc426b867907088028d64477498d53b651c5b71f2ddcbb231bd656f48",
+      "minimal_complete_answer_tokens_estimated": 835
+    },
+    {
+      "seed": 43,
+      "checkpoint_tokens": 16000,
+      "history_sha256": "a071825a686990d444df2327e34975373a4e40284b62594384b900c96d98fec3",
+      "target_events_sha256": "4d0a047489d07af93a49aea17640bab3ec20fd9bb64e31ecb0a3bc1cc0962b42",
+      "oracle_sha256": "aff4229c9a6b0fad2c120f0c3546a0edc50a4e430522f37e50ea056f98b024dd",
+      "minimal_complete_answer_tokens_estimated": 1094
+    },
+    {
+      "seed": 43,
+      "checkpoint_tokens": 32000,
+      "history_sha256": "cd16d10a0bcdf3901fdca99f7bbb1b0e4970e93450868ce0b75bf3c5e8614a9b",
+      "target_events_sha256": "fbcb4c54ec625b1d4875f544f009ba7199df53a3f4779055ef52e54dabc09a79",
+      "oracle_sha256": "dce9b415daac8dbc6a647364fb464a07b0ecd6bc48eae3d556bd92492a47aec8",
+      "minimal_complete_answer_tokens_estimated": 1361
+    }
+  ],
+  "versions": {
+    "python": "3.11.9",
+    "platform": "Darwin",
+    "mcp": "1.29.0",
+    "tiktoken": "0.14.0",
+    "runtime_package": "0.1.0",
+    "codex_cli": "codex-cli 0.142.3"
+  },
+  "source_sha256": "490520b606d353b3acddb1cc34389ef6cdf6476d4f02f1b927ffbebf85e847ed"
+}

@@ -1,0 +1,59 @@
+{
+  "response": "{\"requirements\":{\"R001\":\"v-jc4VZUM2wwktTHBR\",\"R002\":\"v-a5ycS8i4Wr7uxbJm\",\"R003\":\"v-DJ539NK9wkm4uPXk\",\"R004\":\"v-kWSrTcnyFToojW4U\",\"R005\":\"v-c5iXBdZnDzyYDgZo\",\"R006\":\"v-U7qsSkVsajS4nC2s\",\"R007\":\"v-qVG2xjQybDh4Bjwu\",\"R008\":\"v-no3TXADzYBfyTgrD\",\"R009\":\"v-JR9d2bQubahX78v3\",\"R010\":\"v-xo5bMNSKuHPD6kV4\",\"R011\":\"v-9W4WDLcFv2V6Stbg\",\"R012\":\"v-EkFkrRQkSnL4UDx9\",\"R013\":\"v-hob5hQmcjreEfzPQ\",\"R014\":\"v-gW5NZpBynnjdD6Xo\",\"R015\":\"v-LmQqWZMzPVdYeoFj\",\"R016\":\"v-GjANnwmzMefe7iJk\",\"R017\":\"v-kDchpw774TTetQbS\",\"R018\":\"v-Wcga4HvkVsP4PeYU\",\"R019\":\"v-6Bfk5zQ8sB7b3HdD\",\"R020\":\"v-VBchdoxrCgndugx4\",\"R021\":\"v-zXFzy63Crx8UWWHX\",\"R022\":\"v-x2cJqzzGQ42TWGG8\",\"R023\":\"v-Hb5AZreo5LBQs8z6\",\"R024\":\"v-2jpzKtmKLokWh489\",\"R025\":\"v-UcEqRLwK2RdmWkze\",\"R026\":\"v-zi4JURhSiNZArHXh\",\"R027\":\"v-EdF9iaRLEUEUXzfW\",\"R028\":\"v-oeZdtEskZU3Wau4B\",\"R029\":\"v-hBSgJNLSKC7HUeDF\",\"R030\":\"v-TFVbsP9WAC8noDYu\",\"R031\":\"v-WEdF8P4XkRNSpjdo\",\"R032\":\"v-7Zy9wNQzr6aEftNY\",\"R033\":\"v-xCaqQHWxEtxiNM5H\",\"R034\":\"v-9sVDHkf8PxFjjdSW\",\"R035\":\"v-AZY8hsk2vA48Vdaq\",\"R036\":\"v-ouiwnN6F4CPWeutk\",\"R037\":\"v-FFXLtKXjUdpuNrPa\",\"R038\":\"v-q2uG6bAhf7mTwbhK\",\"R039\":\"v-dcSWGC4rUji5AJfe\",\"R040\":\"v-FcdcTkN2Tb7QdPk8\",\"R041\":\"v-E86YsFXPNC4NKhbH\",\"R042\":\"v-guYtM7VsU9n8XPft\",\"R043\":\"v-CLnae2U7KQiWh7d9\",\"R044\":\"v-NAT5u6a8zV2Bc6JU\",\"R045\":\"v-QsY73NF44pTntfU6\",\"R046\":\"v-x2vttNicdBrUGWGB\",\"R047\":\"v-ovJfEReZUoghgHtE\",\"R048\":\"v-LDFF4Zc2fFobSfVq\",\"R049\":\"v-uV3P72BTgr8KNmA9\",\"R050\":\"v-CKGtXsGTkwLbMNHk\",\"R051\":\"v-8566qBUHhM5bwF8F\",\"R052\":\"v-TsmonNSPDDxpNwwy\",\"R053\":\"v-hTvChSdqrqp8seRz\",\"R054\":\"v-JHvtjV5ay6yxhhTG\",\"R055\":\"v-5yX4jUmcmofXZgiW\",\"R056\":\"v-uL97iZP8xLhuXGbK\",\"R057\":\"v-KnVw8SNcyYAksezA\",\"R058\":\"v-YNb4rTRkCND3MUp3\",\"R059\":\"v-FRopEZmsoeoGw7Vd\",\"R060\":\"v-AFhQrxu7taiksh9A\",\"R061\":\"v-Lg5nN6z8RZqshjRg\",\"R062\":\"v-oVJPdTTgckgjS37u\",\"R063\":\"v-QoHokkeG4BTnWrHs\",\"R064\":\"v-LuL33TkLuHoFzBmv\",\"R998\":null,\"R999\":null},\"completed_actions\":[\"A001\",\"A002\",\"A003\",\"A004\",\"A005\",\"A006\",\"A007\",\"A008\",\"A009\"],\"next_actions\":[\"P001\",\"P002\"]}",
+  "usage": {
+    "input_tokens": 19928,
+    "cached_input_tokens": 17792,
+    "output_tokens": 1179,
+    "reasoning_output_tokens": 55
+  },
+  "event_types": [
+    "thread.started",
+    "turn.started",
+    "item.completed",
+    "item.completed",
+    "turn.completed"
+  ],
+  "cli_diagnostics": [
+    {
+      "kind": "cli_warning",
+      "cli_resolved_model": null
+    }
+  ],
+  "prompt": "Synthetic continuation test. Current task is ORION-17. Use only the supplied memory. Apply the newest correction for this task, ignore unrelated tasks, and never repeat a verified completed action. Return only JSON with requirements (each requested ID mapped to its exact current code or null if unknown), completed_actions (all known completed action IDs), and next_actions (remaining permitted action IDs). Do not guess a missing value. No tools, files, or external actions.\nRequested requirement IDs: [\"R001\",\"R002\",\"R003\",\"R004\",\"R005\",\"R006\",\"R007\",\"R008\",\"R009\",\"R010\",\"R011\",\"R012\",\"R013\",\"R014\",\"R015\",\"R016\",\"R017\",\"R018\",\"R019\",\"R020\",\"R021\",\"R022\",\"R023\",\"R024\",\"R025\",\"R026\",\"R027\",\"R028\",\"R029\",\"R030\",\"R031\",\"R032\",\"R033\",\"R034\",\"R035\",\"R036\",\"R037\",\"R038\",\"R039\",\"R040\",\"R041\",\"R042\",\"R043\",\"R044\",\"R045\",\"R046\",\"R047\",\"R048\",\"R049\",\"R050\",\"R051\",\"R052\",\"R053\",\"R054\",\"R055\",\"R056\",\"R057\",\"R058\",\"R059\",\"R060\",\"R061\",\"R062\",\"R063\",\"R064\",\"R998\",\"R999\"]\n<MEMORY>\nTASK ORION-17 ROLLING HANDOFF\n\nScope:\n- Synthetic task: ORION-17 only.\n- Inputs used: previous ORION-17 summary + Checkpoint 3 event batch.\n- Ignore all LYRA-17, VEGA-17, and DRACO-17 observations; they do not revise ORION-17.\n- Manual handoff only; no tools or external actions used.\n\nCurrent requirement codes:\n- R001 = `v-jc4VZUM2wwktTHBR`\n- R002 = `v-a5ycS8i4Wr7uxbJm`\n- R003 = `v-DJ539NK9wkm4uPXk`\n- R004 = `v-kWSrTcnyFToojW4U`\n- R005 = `v-c5iXBdZnDzyYDgZo`\n- R006 = `v-U7qsSkVsajS4nC2s`\n- R007 = `v-qVG2xjQybDh4Bjwu`\n- R008 = `v-no3TXADzYBfyTgrD`\n- R009 = `v-JR9d2bQubahX78v3`\n- R010 = `v-xo5bMNSKuHPD6kV4`\n- R011 = `v-9W4WDLcFv2V6Stbg`\n- R012 = `v-EkFkrRQkSnL4UDx9`\n- R013 = `v-hob5hQmcjreEfzPQ`\n- R014 = `v-gW5NZpBynnjdD6Xo`\n- R015 = `v-LmQqWZMzPVdYeoFj`\n- R016 = `v-GjANnwmzMefe7iJk`\n- R017 = `v-kDchpw774TTetQbS`\n- R018 = `v-Wcga4HvkVsP4PeYU`\n- R019 = `v-6Bfk5zQ8sB7b3HdD`\n- R020 = `v-VBchdoxrCgndugx4`\n- R021 = `v-zXFzy63Crx8UWWHX`\n- R022 = `v-x2cJqzzGQ42TWGG8`\n- R023 = `v-Hb5AZreo5LBQs8z6`\n- R024 = `v-2jpzKtmKLokWh489`\n- R025 = `v-UcEqRLwK2RdmWkze`\n- R026 = `v-zi4JURhSiNZArHXh`\n- R027 = `v-EdF9iaRLEUEUXzfW`\n- R028 = `v-oeZdtEskZU3Wau4B`\n- R029 = `v-hBSgJNLSKC7HUeDF`\n- R030 = `v-TFVbsP9WAC8noDYu`\n- R031 = `v-WEdF8P4XkRNSpjdo`\n- R032 = `v-7Zy9wNQzr6aEftNY`\n- R033 = `v-xCaqQHWxEtxiNM5H`\n- R034 = `v-9sVDHkf8PxFjjdSW`\n- R035 = `v-AZY8hsk2vA48Vdaq`\n- R036 = `v-ouiwnN6F4CPWeutk`\n- R037 = `v-FFXLtKXjUdpuNrPa`\n- R038 = `v-q2uG6bAhf7mTwbhK`\n- R039 = `v-dcSWGC4rUji5AJfe`\n- R040 = `v-FcdcTkN2Tb7QdPk8`\n- R041 = `v-E86YsFXPNC4NKhbH`\n- R042 = `v-guYtM7VsU9n8XPft`\n- R043 = `v-CLnae2U7KQiWh7d9`\n- R044 = `v-NAT5u6a8zV2Bc6JU`\n- R045 = `v-QsY73NF44pTntfU6`\n- R046 = `v-x2vttNicdBrUGWGB`\n- R047 = `v-ovJfEReZUoghgHtE`\n- R048 = `v-LDFF4Zc2fFobSfVq`\n- R049 = `v-uV3P72BTgr8KNmA9`\n- R050 = `v-CKGtXsGTkwLbMNHk`\n- R051 = `v-8566qBUHhM5bwF8F`\n- R052 = `v-TsmonNSPDDxpNwwy`\n- R053 = `v-hTvChSdqrqp8seRz`\n- R054 = `v-JHvtjV5ay6yxhhTG`\n- R055 = `v-5yX4jUmcmofXZgiW`\n- R056 = `v-uL97iZP8xLhuXGbK`\n- R057 = `v-KnVw8SNcyYAksezA`\n- R058 = `v-YNb4rTRkCND3MUp3`\n- R059 = `v-FRopEZmsoeoGw7Vd`\n- R060 = `v-AFhQrxu7taiksh9A`\n- R061 = `v-Lg5nN6z8RZqshjRg`\n- R062 = `v-oVJPdTTgckgjS37u`\n- R063 = `v-QoHokkeG4BTnWrHs`\n- R064 = `v-LuL33TkLuHoFzBmv`\n\nLatest corrections applied:\n- Prior retained corrections: R006, R007, R009, R017, R020, R023, R029, R031, R039.\n- Checkpoint 3 corrections: R004, R018, R022, R028, R033, R036, R041, R060.\n- Newest correction wins for each corrected requirement; obsolete values are discarded.\n\nVerified completed actions, do not repeat:\n- A001, A002, A003, A004, A005, A006, A007, A008, A009 completed successfully; reuse verified results.\n\nRemaining permitted next actions:\n- P001: review the next incoming event batch. Not completed.\n- P002: prepare the final handoff when requested. Not completed.\n</MEMORY>\n(nod)",
+  "model": "gpt-5.5",
+  "requested_model": "gpt-5.5",
+  "observed_model": null,
+  "reasoning_effort": "medium",
+  "wall_seconds": 26.2866,
+  "prompt_tokens_estimated": 1743,
+  "response_tokens_estimated": 1118,
+  "stderr_present": true,
+  "cached_input_tokens": 17792,
+  "reasoning_tokens": 55,
+  "seed": 17,
+  "checkpoint_tokens": 16000,
+  "arm": "summary",
+  "memory_tokens_estimated": 1437,
+  "memory_sha256": "0a1f7d8645f92fb16e65bfaffe1af6565f5d2c82c1f9048829dadce0c7befbda",
+  "metrics": {
+    "invalid_response": false,
+    "requirements_total": 64,
+    "requirement_failures": 0,
+    "requirement_failure_rate": 0.0,
+    "failed_requirement_ids": [],
+    "known_requirement_abstentions": 0,
+    "corrected_requirements_total": 17,
+    "latest_correction_failures": 0,
+    "stale_value_count": 0,
+    "stale_requirement_ids": [],
+    "completed_actions_total": 9,
+    "completed_action_recall_failures": 0,
+    "repeated_completed_actions": 0,
+    "repeated_completed_action_ids": [],
+    "pending_actions_total": 2,
+    "missing_pending_actions": 0,
+    "invalid_next_actions": 0,
+    "unknown_requirements_total": 2,
+    "unknown_requirement_fabrications": 0
+  }
+}

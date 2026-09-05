@@ -1,0 +1,33 @@
+{
+  "response": "{\"route\":\"ok\"}",
+  "usage": {
+    "input_tokens": 18210,
+    "cached_input_tokens": 17792,
+    "output_tokens": 26,
+    "reasoning_output_tokens": 15
+  },
+  "event_types": [
+    "thread.started",
+    "turn.started",
+    "item.completed",
+    "item.completed",
+    "turn.completed"
+  ],
+  "cli_diagnostics": [
+    {
+      "kind": "cli_warning",
+      "cli_resolved_model": null
+    }
+  ],
+  "prompt": "Synthetic route check. No tools or external actions. Return only {\"route\":\"ok\"}.\n(nod)",
+  "model": null,
+  "requested_model": null,
+  "observed_model": null,
+  "reasoning_effort": "medium",
+  "wall_seconds": 4.4771,
+  "prompt_tokens_estimated": 21,
+  "response_tokens_estimated": 5,
+  "stderr_present": true,
+  "cached_input_tokens": 17792,
+  "reasoning_tokens": 15
+}
