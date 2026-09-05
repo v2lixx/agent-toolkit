@@ -1,4 +1,4 @@
-# agent-toolbox
+# agent-toolkit
 
 Modular frameworks for AI agent memory, workflow, and coordination.
 
@@ -29,7 +29,7 @@ as the complete history.
 ## Repository map
 
 ```text
-agent-toolbox/
+agent-toolkit/
 ├── README.md
 └── diary/
     ├── README.md                Human guide: design, evidence, limitations

@@ -259,7 +259,7 @@ Normal Diary reads, writes, and recovery **must use the `continuity-journal` MCP
 ### 11.1. Authoritative Paths and Installation on Another Machine
 
 - `DIARY_BASE`: the verified absolute expansion of `~/Desktop/Diaries` in this environment. If another operating system requires a different location, agree on it with the user and keep persistent instructions and configuration consistent.
-- Repository source package: `diary/mcps/continuity-journal/` inside `agent-toolbox`.
+   - Repository source package: `diary/mcps/continuity-journal/` inside `agent-toolkit`.
 - Authoritative installed package: `<DIARY_BASE>/mcps/continuity-journal/`.
 - MCP server: `<package>/scripts/continuity_mcp.py`.
 - Runtime and storage configuration: `<package>/runtime.json`.

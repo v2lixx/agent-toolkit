@@ -1,7 +1,7 @@
 # Continuity Journal MCP
 
 The local execution layer for [Diary](../../README.md), an agent continuity
-framework in [agent-toolbox](../../../README.md). It provides 16 explicitly
+framework in [agent-toolkit](../../../README.md). It provides 16 explicitly
 thread-scoped MCP tools for exact prompt logging, task state transitions,
 recursive child journals, and compact recovery after context loss.
 
