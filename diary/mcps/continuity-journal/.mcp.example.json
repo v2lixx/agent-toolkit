@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "continuity-journal": {
+      "command": "/absolute/path/to/python-environment/bin/python",
+      "args": [
+        "/absolute/path/to/Desktop/Diaries/mcps/continuity-journal/scripts/continuity_mcp.py"
+      ],
+      "cwd": "/absolute/path/to/Desktop/Diaries/mcps/continuity-journal",
+      "env": {
+        "CONTINUITY_CONFIG": "/absolute/path/to/Desktop/Diaries/mcps/continuity-journal/runtime.json"
+      }
+    }
+  }
+}

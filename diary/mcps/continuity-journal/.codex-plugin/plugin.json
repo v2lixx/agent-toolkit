@@ -1,0 +1,26 @@
+{
+  "name": "continuity-journal",
+  "version": "0.1.0",
+  "description": "Manage isolated per-thread Diaries, recursive child journals, and scoped compaction recovery.",
+  "author": {
+    "name": "v2lixx",
+    "url": "https://github.com/v2lixx"
+  },
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Continuity Journal",
+    "shortDescription": "Keep each task and child Diary isolated across compaction.",
+    "longDescription": "Local-only, explicitly scoped tools for recursive task Diaries, exact prompt logging, lifecycle tags, parent-ID directory discovery, compaction recovery, and independent guarded checkpoints.",
+    "developerName": "v2lixx",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Show the current diary and checkpoint continuity status.",
+      "Resume the active checkpoint safely."
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "diary_base": "/absolute/path/to/Desktop/Diaries",
+  "protocol_path": "/absolute/path/to/Desktop/Diaries/mcps/continuity-journal/references/CONTINUITY_PROTOCOL.md"
+}

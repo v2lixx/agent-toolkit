@@ -1,0 +1,19 @@
+# Private runtime configuration and generated files never belong in this repository.
+**/runtime.json
+**/.mcp.json
+**/Diary
+!/diary/
+**/Diary.md
+**/DIARY.md
+**/scope.json
+**/checkpoints/
+**/.continuity-journal.lock
+**/.scope-registry.lock
+**/__pycache__/
+*.py[cod]
+.venv/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
